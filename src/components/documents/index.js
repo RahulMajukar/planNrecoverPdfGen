@@ -6,3 +6,4 @@ export { default as RiskRegister } from './RiskRegister';
 export { default as Policy } from './Policy';
 export { default as Procedure } from './Procedure';
 export { default as Methodology } from './Methodology';
+export { default as BusinessContinuityPlan } from './BusinessContinuityPlan';
