@@ -103,17 +103,17 @@ const pdfConfigs = [
       generatedDate: new Date().toLocaleDateString()
     }
   },
-   {
-        id: "bcp",
-        title: "Business Continuity Plan",
-        description: "Comprehensive BCP with first 48 hours guide, roles, recovery strategies, and maintenance procedures.",
-        component: BusinessContinuityPlan,
-        fileName: "business-continuity-plan.pdf",
-        props: {
-            companyName: "ABC Pvt Ltd",
-            generatedDate: new Date().toLocaleDateString()
-        }
+  {
+    id: "bcp",
+    title: "Business Continuity Plan",
+    description: "Comprehensive BCP with first 48 hours guide, roles, recovery strategies, and maintenance procedures.",
+    component: BusinessContinuityPlan,
+    fileName: "business-continuity-plan.pdf",
+    props: {
+      companyName: "ABC Pvt Ltd",
+      generatedDate: new Date().toLocaleDateString()
     }
+  }
 ];
 
 function App() {

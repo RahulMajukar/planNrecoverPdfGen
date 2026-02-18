@@ -1,224 +1,55 @@
 import React from "react";
 import { Text, View, StyleSheet } from "@react-pdf/renderer";
 import BaseDocument from "../pdf/BaseDocument";
+import { sharedStyles as styles } from "../pdf/pdfTheme";
 
-const styles = StyleSheet.create({
-    infoBlock: {
-        marginTop: 10,
-        marginBottom: 20
-    },
-    infoRow: {
-        flexDirection: "row",
-        marginBottom: 6,
-        alignItems: "center",
-        flexWrap: "wrap"
-    },
-    infoLabel: {
-        width: 120,
-        fontWeight: "bold",
-        color: "#ffffff",
-        fontSize: 11
-    },
-    infoValue: {
-        color: "#e5e7eb",
-        fontSize: 11,
-        flex: 1
-    },
-    sectionTitle: {
-        color: "#22c55e",
-        fontSize: 16,
-        fontWeight: "bold",
-        marginTop: 24,
-        marginBottom: 12,
-        textAlign: "left"
-    },
-    subsectionTitle: {
-        color: "#ffffff",
-        fontSize: 13,
-        fontWeight: "bold",
-        marginTop: 18,
-        marginBottom: 8,
-        textAlign: "left"
-    },
-    subsubsectionTitle: {
-        color: "#9ca3af",
-        fontSize: 11,
-        fontWeight: "bold",
-        marginTop: 12,
-        marginBottom: 6,
-        textAlign: "left",
-        fontStyle: "italic"
-    },
-    paragraph: {
-        lineHeight: 1.6,
-        color: "#e5e7eb",
-        marginBottom: 10,
-        fontSize: 11,
-        textAlign: "justify",
-        textIndent: 0
-    },
-    bulletList: {
-        marginLeft: 15,
-        marginBottom: 10
-    },
-    bulletItem: {
-        lineHeight: 1.5,
-        color: "#e5e7eb",
-        fontSize: 10,
-        marginBottom: 4,
-        textAlign: "justify"
-    },
-    numberedList: {
-        marginLeft: 20,
-        marginBottom: 10
-    },
-    numberedItem: {
-        lineHeight: 1.5,
-        color: "#e5e7eb",
-        fontSize: 10,
-        marginBottom: 6,
-        textAlign: "justify"
-    },
-    nestedBullet: {
-        marginLeft: 15,
-        marginTop: 2,
-        marginBottom: 2
-    },
-    nestedBulletItem: {
-        lineHeight: 1.4,
-        color: "#e5e7eb",
-        fontSize: 9,
-        marginBottom: 2
-    },
-    link: {
-        color: "#93c5fd",
-        textDecoration: "underline"
-    },
-    divider: {
-        borderBottomWidth: 1,
-        borderBottomColor: "#374151",
-        marginVertical: 16
-    },
-    table: {
-        marginTop: 20,
-        borderWidth: 1,
-        borderColor: "#374151",
-        borderStyle: "solid"
-    },
-    tableRow: {
-        flexDirection: "row",
-        borderBottomWidth: 1,
-        borderBottomColor: "#374151"
-    },
-    tableHeader: {
-        backgroundColor: "#1f2937",
-        padding: 8
-    },
-    tableCell: {
-        padding: 8,
-        fontSize: 9,
-        color: "#e5e7eb"
-    },
-    tableCellBold: {
-        padding: 8,
-        fontSize: 9,
-        color: "#ffffff",
-        fontWeight: "bold"
-    },
+// Column widths specific to this document
+const col = StyleSheet.create({
     col1: { width: "30%" },
     col2: { width: "20%" },
     col3: { width: "18%" },
     col4: { width: "32%" },
-    smallBullet: {
-        fontSize: 8,
-        marginLeft: 0,
-        marginBottom: 2
-    },
-    bold: {
-        fontWeight: "bold",
-        color: "#ffffff"
-    },
-    italic: {
-        fontStyle: "italic",
-        color: "#9ca3af"
-    },
-    // Policy header styles
+});
+
+// Document-specific style overrides (grayscale)
+const local = StyleSheet.create({
     policyHeader: {
         marginBottom: 20,
         paddingBottom: 15,
         borderBottomWidth: 1,
-        borderBottomColor: "#374151"
+        borderBottomColor: "#cccccc"
     },
     policyTitle: {
         fontSize: 18,
-        color: "#ffffff",
+        color: "#111111",
         fontWeight: "bold",
         marginBottom: 8
     },
     policyAlignment: {
         fontSize: 9,
-        color: "#9ca3af",
+        color: "#777777",
         fontStyle: "italic",
         marginBottom: 12
     },
-    policyMeta: {
-        fontSize: 10,
-        color: "#e5e7eb",
-        lineHeight: 1.5
+    roleTitle: {
+        color: "#111111",
+        fontSize: 12,
+        fontWeight: "bold",
+        marginBottom: 6
     },
-    // Role section styles
     roleSection: {
         marginTop: 16,
         marginBottom: 16,
         paddingLeft: 10,
         borderLeftWidth: 2,
-        borderLeftColor: "#374151"
+        borderLeftColor: "#cccccc"
     },
-    roleTitle: {
-        color: "#60a5fa",
-        fontSize: 12,
-        fontWeight: "bold",
-        marginBottom: 6
-    },
-    roleDescription: {
-        lineHeight: 1.5,
-        color: "#e5e7eb",
-        fontSize: 10,
-        marginBottom: 4
-    },
-    roleStandards: {
-        fontSize: 9,
-        color: "#9ca3af",
-        fontStyle: "italic",
-        marginTop: 4
-    },
-    // Appendix styles
-    appendixTitle: {
-        fontSize: 14,
-        color: "#22c55e",
-        fontWeight: "bold",
-        marginTop: 24,
-        marginBottom: 12
-    },
-    // Version control
-    versionControl: {
-        marginTop: 30,
-        paddingTop: 15,
-        borderTopWidth: 1,
-        borderTopColor: "#374151"
-    },
-    versionTitle: {
-        fontSize: 12,
-        color: "#ffffff",
-        fontWeight: "bold",
-        marginBottom: 8
-    }
 });
 
 const bulletPoint = "• ";
 const numberedPoint = (num) => `${num}. `;
 
-export default function Policy({ 
+export default function Policy({
     companyName = "Display name of company",
     generatedDate = new Date().toLocaleDateString(),
     reviewCadence = "At least annually, and after major business, technology, facility, supplier, or regulatory change (ISO 22301 Clauses 9.3, 10; DRI PP8)."
@@ -226,14 +57,14 @@ export default function Policy({
     return (
         <BaseDocument title="Policy">
             {/* Policy Header */}
-            <View style={styles.policyHeader}>
-                <Text style={styles.policyTitle}>Policy</Text>
-                <Text style={styles.policyAlignment}>
+            <View style={local.policyHeader}>
+                <Text style={local.policyTitle}>Policy</Text>
+                <Text style={local.policyAlignment}>
                     (Aligned to ISO 22301 and DRI International 10 Professional Practices)
                 </Text>
-                
+
                 <View style={styles.divider} />
-                
+
                 <View style={styles.infoBlock}>
                     <View style={styles.infoRow}>
                         <Text style={styles.infoLabel}>Company:</Text>
@@ -248,8 +79,8 @@ export default function Policy({
                         <Text style={styles.infoValue}>{reviewCadence}</Text>
                     </View>
                 </View>
-                
-                <Text style={styles.policyAlignment}>
+
+                <Text style={local.policyAlignment}>
                     (Aligned to ISO 22301 and DRI International 10 Professional Practices)
                 </Text>
             </View>
@@ -283,7 +114,7 @@ export default function Policy({
             <Text style={styles.paragraph}>
                 Leadership commits that the organization will:
             </Text>
-            
+
             <View style={styles.numberedList}>
                 <Text style={styles.numberedItem}>
                     <Text style={styles.bold}>{numberedPoint(1)}Lead and resource continuity as a management system</Text>
@@ -291,49 +122,49 @@ export default function Policy({
                         <Text style={styles.nestedBulletItem}>{bulletPoint}Establish, sponsor, and maintain an effective BCMS, including roles, resources, and governance (ISO 22301 Clause 5; DRI PP1).</Text>
                     </View>
                 </Text>
-                
+
                 <Text style={styles.numberedItem}>
                     <Text style={styles.bold}>{numberedPoint(2)}Base continuity decisions on impact and risk</Text>
                     <View style={styles.nestedBullet}>
                         <Text style={styles.nestedBulletItem}>{bulletPoint}Maintain a Business Impact Analysis (BIA) and Risk Assessment program to identify prioritized activities, dependencies, and disruption scenarios (ISO 22301 Clause 8.2; DRI PP2, PP3).</Text>
                     </View>
                 </Text>
-                
+
                 <Text style={styles.numberedItem}>
                     <Text style={styles.bold}>{numberedPoint(3)}Set clear recovery requirements and strategies</Text>
                     <View style={styles.nestedBullet}>
                         <Text style={styles.nestedBulletItem}>{bulletPoint}Define recovery objectives and implement continuity strategies that meet those requirements (ISO 22301 Clause 8.3; DRI PP4).</Text>
                     </View>
                 </Text>
-                
+
                 <Text style={styles.numberedItem}>
                     <Text style={styles.bold}>{numberedPoint(4)}Maintain actionable plans and response structures</Text>
                     <View style={styles.nestedBullet}>
                         <Text style={styles.nestedBulletItem}>{bulletPoint}Maintain incident response and business continuity plans with clear activation, roles, escalation, and recovery steps (ISO 22301 Clause 8.4; DRI PP5, PP6).</Text>
                     </View>
                 </Text>
-                
+
                 <Text style={styles.numberedItem}>
                     <Text style={styles.bold}>{numberedPoint(5)}Communicate effectively during disruptions</Text>
                     <View style={styles.nestedBullet}>
                         <Text style={styles.nestedBulletItem}>{bulletPoint}Maintain crisis communications capabilities for internal and external stakeholders, including message ownership, approvals, and channels (ISO 22301 Clauses 7.4, 8.4.3; DRI PP9).</Text>
                     </View>
                 </Text>
-                
+
                 <Text style={styles.numberedItem}>
                     <Text style={styles.bold}>{numberedPoint(6)}Build competence through training and exercises</Text>
                     <View style={styles.nestedBullet}>
                         <Text style={styles.nestedBulletItem}>{bulletPoint}Provide role-based training and conduct exercises to validate capabilities and drive improvement (ISO 22301 Clauses 7.2, 7.3, 8.5, 8.6; DRI PP7, PP8).</Text>
                     </View>
                 </Text>
-                
+
                 <Text style={styles.numberedItem}>
                     <Text style={styles.bold}>{numberedPoint(7)}Measure performance and continuously improve</Text>
                     <View style={styles.nestedBullet}>
                         <Text style={styles.nestedBulletItem}>{bulletPoint}Monitor, audit, review, correct, and improve the BCMS (ISO 22301 Clauses 9, 10; DRI PP8).</Text>
                     </View>
                 </Text>
-                
+
                 <Text style={styles.numberedItem}>
                     <Text style={styles.bold}>{numberedPoint(8)}Coordinate with external parties when needed</Text>
                     <View style={styles.nestedBullet}>
@@ -346,7 +177,7 @@ export default function Policy({
 
             {/* Section 4: Governance and Accountability */}
             <Text style={styles.sectionTitle}>4. Governance and Accountability (Who does what)</Text>
-            
+
             {/* Leadership */}
             <View style={styles.roleSection}>
                 <Text style={styles.roleTitle}>Leadership (Accountable)</Text>
@@ -442,7 +273,7 @@ export default function Policy({
             <Text style={styles.paragraph}>
                 The organization will maintain the following, at a minimum:
             </Text>
-            
+
             <View style={styles.numberedList}>
                 <Text style={styles.numberedItem}>
                     <Text style={styles.bold}>{numberedPoint(1)}BCMS scope, objectives, and governance</Text>
@@ -450,49 +281,49 @@ export default function Policy({
                         <Text style={styles.nestedBulletItem}>{bulletPoint}Documented scope and continuity objectives, with defined governance forums and reporting cadence (ISO 22301 Clauses 4–6; DRI PP1).</Text>
                     </View>
                 </Text>
-                
+
                 <Text style={styles.numberedItem}>
                     <Text style={styles.bold}>{numberedPoint(2)}BIA and risk assessment program</Text>
                     <View style={styles.nestedBullet}>
                         <Text style={styles.nestedBulletItem}>{bulletPoint}Defined methodology, prioritized activities, dependency mapping, impact tolerances or recovery requirements, and periodic review (ISO 22301 Clause 8.2; DRI PP2, PP3).</Text>
                     </View>
                 </Text>
-                
+
                 <Text style={styles.numberedItem}>
                     <Text style={styles.bold}>{numberedPoint(3)}Continuity strategies and solutions</Text>
                     <View style={styles.nestedBullet}>
                         <Text style={styles.nestedBulletItem}>{bulletPoint}Strategy decisions for people, process, technology, facilities, data, and third parties, aligned to recovery requirements (ISO 22301 Clause 8.3; DRI PP4).</Text>
                     </View>
                 </Text>
-                
+
                 <Text style={styles.numberedItem}>
                     <Text style={styles.bold}>{numberedPoint(4)}Plans and procedures</Text>
                     <View style={styles.nestedBullet}>
                         <Text style={styles.nestedBulletItem}>{bulletPoint}Documented plans with activation criteria, roles, escalation, communications, continuity actions, and recovery steps for prioritized activities (ISO 22301 Clause 8.4; DRI PP5, PP6, PP9).</Text>
                     </View>
                 </Text>
-                
+
                 <Text style={styles.numberedItem}>
                     <Text style={styles.bold}>{numberedPoint(5)}Training and awareness</Text>
                     <View style={styles.nestedBullet}>
                         <Text style={styles.nestedBulletItem}>{bulletPoint}Role-based training and broad awareness for relevant personnel, with evidence of completion (ISO 22301 Clauses 7.2–7.3; DRI PP7).</Text>
                     </View>
                 </Text>
-                
+
                 <Text style={styles.numberedItem}>
                     <Text style={styles.bold}>{numberedPoint(6)}Exercise and maintenance program</Text>
                     <View style={styles.nestedBullet}>
                         <Text style={styles.nestedBulletItem}>{bulletPoint}Exercises on a planned cadence based on criticality and change, with after-action items tracked to closure (ISO 22301 Clauses 8.5–8.6, 10; DRI PP8).</Text>
                     </View>
                 </Text>
-                
+
                 <Text style={styles.numberedItem}>
                     <Text style={styles.bold}>{numberedPoint(7)}Performance evaluation and management review</Text>
                     <View style={styles.nestedBullet}>
                         <Text style={styles.nestedBulletItem}>{bulletPoint}KPIs, internal audits (where applicable), and management reviews with documented decisions and actions (ISO 22301 Clause 9; DRI PP8).</Text>
                     </View>
                 </Text>
-                
+
                 <Text style={styles.numberedItem}>
                     <Text style={styles.bold}>{numberedPoint(8)}Document control and availability</Text>
                     <View style={styles.nestedBullet}>
@@ -533,7 +364,7 @@ export default function Policy({
 
             {/* Appendix: Standards Alignment */}
             <Text style={styles.appendixTitle}>Appendix: Standards Alignment</Text>
-            
+
             <View style={styles.table}>
                 <View style={[styles.tableRow, styles.tableHeader]}>
                     <View style={styles.col1}>

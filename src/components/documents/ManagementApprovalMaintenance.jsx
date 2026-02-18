@@ -1,144 +1,11 @@
 import React from "react";
-import { Text, View, StyleSheet } from "@react-pdf/renderer";
+import { Text, View } from "@react-pdf/renderer";
 import BaseDocument from "../pdf/BaseDocument";
-
-const styles = StyleSheet.create({
-    infoBlock: {
-        marginTop: 10,
-        marginBottom: 20
-    },
-    infoRow: {
-        flexDirection: "row",
-        marginBottom: 6,
-        alignItems: "center"
-    },
-    infoLabel: {
-        width: 90,
-        fontWeight: "bold",
-        color: "#ffffff",
-        fontSize: 11
-    },
-    infoValue: {
-        color: "#e5e7eb",
-        fontSize: 11
-    },
-    sectionTitle: {
-        color: "#22c55e",
-        fontSize: 16,
-        fontWeight: "bold",
-        marginTop: 24,
-        marginBottom: 12,
-        textAlign: "left"
-    },
-    subsectionTitle: {
-        color: "#ffffff",
-        fontSize: 13,
-        fontWeight: "bold",
-        marginTop: 18,
-        marginBottom: 8,
-        textAlign: "left"
-    },
-    paragraph: {
-        lineHeight: 1.6,
-        color: "#e5e7eb",
-        marginBottom: 10,
-        fontSize: 11,
-        textAlign: "justify",
-        textIndent: 0
-    },
-    italicText: {
-        fontStyle: "italic",
-        color: "#9ca3af"
-    },
-    bulletList: {
-        marginLeft: 15,
-        marginBottom: 10
-    },
-    bulletItem: {
-        lineHeight: 1.5,
-        color: "#e5e7eb",
-        fontSize: 10,
-        marginBottom: 4,
-        textAlign: "justify"
-    },
-    divider: {
-        borderBottomWidth: 1,
-        borderBottomColor: "#374151",
-        marginVertical: 16
-    },
-    
-    // Approval section styles
-    approvalSection: {
-        marginBottom: 20,
-        paddingBottom: 15,
-        borderBottomWidth: 1,
-        borderBottomColor: "#374151"
-    },
-    lastUpdatedText: {
-        marginBottom: 12
-    },
-    approvalText: {
-        lineHeight: 1.6,
-        color: "#e5e7eb",
-        marginBottom: 10,
-        fontSize: 11,
-        textAlign: "justify"
-    },
-    bold: {
-        fontWeight: "bold",
-        color: "#ffffff"
-    },
-    
-    // Status indicators
-    statusGreen: {
-        backgroundColor: "#22c55e",
-        color: "#ffffff",
-        paddingHorizontal: 8,
-        paddingVertical: 3,
-        borderRadius: 4,
-        fontSize: 9,
-        fontWeight: "bold",
-        marginLeft: 8
-    },
-    statusAmber: {
-        backgroundColor: "#f59e0b",
-        color: "#000000",
-        paddingHorizontal: 8,
-        paddingVertical: 3,
-        borderRadius: 4,
-        fontSize: 9,
-        fontWeight: "bold",
-        marginLeft: 8
-    },
-    statusRed: {
-        backgroundColor: "#ef4444",
-        color: "#ffffff",
-        paddingHorizontal: 8,
-        paddingVertical: 3,
-        borderRadius: 4,
-        fontSize: 9,
-        fontWeight: "bold",
-        marginLeft: 8
-    },
-    
-    // Approval input box
-    approvalBox: {
-        backgroundColor: "#1f2937",
-        borderLeftWidth: 3,
-        borderLeftColor: "#3b82f6",
-        padding: 10,
-        marginTop: 12
-    },
-    approvalBoxText: {
-        fontSize: 9,
-        color: "#9ca3af",
-        lineHeight: 1.4
-    }
-});
+import { sharedStyles as styles } from "../pdf/pdfTheme";
 
 const bulletPoint = "• ";
 
-export default function ManagementApprovalMaintenance({ 
+export default function ManagementApprovalMaintenance({
     companyName = "Display name of company",
     generatedDate = new Date().toLocaleDateString()
 }) {
@@ -147,14 +14,14 @@ export default function ManagementApprovalMaintenance({
         if (!approvalDate) {
             return { text: "Awaiting Initial Approval", style: styles.statusRed };
         }
-        
+
         const approval = new Date(approvalDate);
         const now = new Date();
         const diffTime = Math.abs(now - approval);
         const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
         const elevenMonths = 335;
         const oneYear = 365;
-        
+
         if (diffDays <= elevenMonths) {
             return { text: `${approvalDate}`, style: styles.statusGreen };
         } else if (diffDays <= oneYear) {
@@ -184,7 +51,7 @@ export default function ManagementApprovalMaintenance({
             <View style={styles.divider} />
 
             <Text style={styles.sectionTitle}>1. Essentials</Text>
-            
+
             <View style={styles.approvalSection}>
                 <View style={styles.lastUpdatedText}>
                     <Text style={styles.paragraph}>
@@ -218,7 +85,7 @@ export default function ManagementApprovalMaintenance({
             </View>
 
             <Text style={styles.sectionTitle}>2. Assessments</Text>
-            
+
             <View style={styles.approvalSection}>
                 <View style={styles.lastUpdatedText}>
                     <Text style={styles.paragraph}>
@@ -247,7 +114,7 @@ export default function ManagementApprovalMaintenance({
             </View>
 
             <Text style={styles.sectionTitle}>3. Plans</Text>
-            
+
             <View style={styles.approvalSection}>
                 <View style={styles.lastUpdatedText}>
                     <Text style={styles.paragraph}>
@@ -276,7 +143,7 @@ export default function ManagementApprovalMaintenance({
             </View>
 
             <Text style={styles.sectionTitle}>4. Governance</Text>
-            
+
             <View style={styles.approvalSection}>
                 <View style={styles.lastUpdatedText}>
                     <Text style={styles.paragraph}>

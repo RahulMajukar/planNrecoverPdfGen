@@ -1,188 +1,30 @@
 import React from "react";
 import { Text, View, StyleSheet } from "@react-pdf/renderer";
 import BaseDocument from "../pdf/BaseDocument";
+import { sharedStyles as styles } from "../pdf/pdfTheme";
 
-const styles = StyleSheet.create({
-    infoBlock: {
-        marginTop: 10,
-        marginBottom: 20
-    },
-    infoRow: {
-        flexDirection: "row",
-        marginBottom: 6,
-        alignItems: "center",
-        flexWrap: "wrap"
-    },
-    infoLabel: {
-        width: 120,
-        fontWeight: "bold",
-        color: "#ffffff",
-        fontSize: 11
-    },
-    infoValue: {
-        color: "#e5e7eb",
-        fontSize: 11,
-        flex: 1
-    },
-    sectionTitle: {
-        color: "#22c55e",
-        fontSize: 16,
-        fontWeight: "bold",
-        marginTop: 24,
-        marginBottom: 12,
-        textAlign: "left"
-    },
-    subsectionTitle: {
-        color: "#ffffff",
-        fontSize: 13,
-        fontWeight: "bold",
-        marginTop: 18,
-        marginBottom: 8,
-        textAlign: "left"
-    },
-    subsubsectionTitle: {
-        color: "#9ca3af",
-        fontSize: 11,
-        fontWeight: "bold",
-        marginTop: 12,
-        marginBottom: 6,
-        textAlign: "left",
-        fontStyle: "italic"
-    },
-    paragraph: {
-        lineHeight: 1.6,
-        color: "#e5e7eb",
-        marginBottom: 10,
-        fontSize: 11,
-        textAlign: "justify",
-        textIndent: 0
-    },
-    italicText: {
-        fontStyle: "italic",
-        color: "#9ca3af"
-    },
-    // Bullet Lists
-    bulletList: {
-        marginLeft: 15,
-        marginBottom: 10
-    },
-    bulletItem: {
-        lineHeight: 1.5,
-        color: "#e5e7eb",
-        fontSize: 10,
-        marginBottom: 4,
-        textAlign: "justify"
-    },
-    // Numbered Lists
-    numberedList: {
-        marginLeft: 20,
-        marginBottom: 10
-    },
-    numberedItem: {
-        lineHeight: 1.5,
-        color: "#e5e7eb",
-        fontSize: 10,
-        marginBottom: 6,
-        textAlign: "justify"
-    },
-    // Nested bullets
-    nestedBullet: {
-        marginLeft: 15,
-        marginTop: 2,
-        marginBottom: 2
-    },
-    nestedBulletItem: {
-        lineHeight: 1.4,
-        color: "#e5e7eb",
-        fontSize: 9,
-        marginBottom: 2
-    },
-    // Divider
-    divider: {
-        borderBottomWidth: 1,
-        borderBottomColor: "#374151",
-        marginVertical: 16
-    },
-    // Tables
-    table: {
-        marginTop: 20,
-        borderWidth: 1,
-        borderColor: "#374151",
-        borderStyle: "solid"
-    },
-    tableRow: {
-        flexDirection: "row",
-        borderBottomWidth: 1,
-        borderBottomColor: "#374151"
-    },
-    tableHeader: {
-        backgroundColor: "#1f2937",
-        padding: 8
-    },
-    tableCell: {
-        padding: 8,
-        fontSize: 9,
-        color: "#e5e7eb"
-    },
-    tableCellBold: {
-        padding: 8,
-        fontSize: 9,
-        color: "#ffffff",
-        fontWeight: "bold"
-    },
+// Document-specific column widths and style overrides
+const local = StyleSheet.create({
     col1: { width: "30%" },
     col2: { width: "25%" },
     col3: { width: "45%" },
-    smallBullet: {
-        fontSize: 8,
-        marginLeft: 0,
-        marginBottom: 2
-    },
-    // Bold and italic utilities
-    bold: {
-        fontWeight: "bold",
-        color: "#ffffff"
-    },
-    italic: {
-        fontStyle: "italic",
-        color: "#9ca3af"
-    },
-    // Methodology header styles
-    methodologyHeader: {
-        marginBottom: 20,
-        paddingBottom: 15,
-        borderBottomWidth: 1,
-        borderBottomColor: "#374151"
-    },
-    methodologyTitle: {
-        fontSize: 18,
-        color: "#ffffff",
-        fontWeight: "bold",
-        marginBottom: 8
-    },
-    methodologyAlignment: {
-        fontSize: 9,
-        color: "#9ca3af",
-        fontStyle: "italic",
-        marginBottom: 12
-    },
     // Guiding principles box
     principlesBox: {
-        backgroundColor: "#374151",
+        backgroundColor: "#f3f4f6",
         borderLeftWidth: 3,
-        borderLeftColor: "#60a5fa",
+        borderLeftColor: "#111111",
         padding: 10,
         marginVertical: 12
     },
     principlesTitle: {
         fontSize: 11,
         fontWeight: "bold",
-        color: "#60a5fa",
+        color: "#111111",
         marginBottom: 6
     },
-    // Intent/Requirements sections
+    // Intent box
     intentBox: {
-        backgroundColor: "#1f2937",
+        backgroundColor: "#f3f4f6",
         padding: 10,
         marginVertical: 8,
         borderRadius: 4
@@ -190,13 +32,48 @@ const styles = StyleSheet.create({
     intentTitle: {
         fontSize: 10,
         fontWeight: "bold",
-        color: "#22c55e",
+        color: "#111111",
         marginBottom: 4
     },
     intentText: {
         fontSize: 10,
-        color: "#e5e7eb",
+        color: "#333333",
         lineHeight: 1.5
+    },
+    requirementsTitle: {
+        fontSize: 10,
+        fontWeight: "bold",
+        color: "#333333",
+        marginBottom: 4,
+        marginTop: 8
+    },
+    // Quality checks box
+    qualityBox: {
+        backgroundColor: "#f3f4f6",
+        borderLeftWidth: 3,
+        borderLeftColor: "#555555",
+        padding: 10,
+        marginVertical: 12
+    },
+    qualityTitle: {
+        fontSize: 10,
+        fontWeight: "bold",
+        color: "#111111",
+        marginBottom: 4
+    },
+    // Outputs box
+    outputsBox: {
+        backgroundColor: "#f3f4f6",
+        borderLeftWidth: 3,
+        borderLeftColor: "#333333",
+        padding: 10,
+        marginVertical: 12
+    },
+    outputsTitle: {
+        fontSize: 10,
+        fontWeight: "bold",
+        color: "#333333",
+        marginBottom: 4
     },
     // Role sections
     roleSection: {
@@ -204,75 +81,26 @@ const styles = StyleSheet.create({
         marginBottom: 16,
         paddingLeft: 10,
         borderLeftWidth: 2,
-        borderLeftColor: "#374151"
+        borderLeftColor: "#cccccc"
     },
     roleTitle: {
-        color: "#60a5fa",
+        color: "#111111",
         fontSize: 12,
         fontWeight: "bold",
         marginBottom: 6
     },
     roleDescription: {
         lineHeight: 1.5,
-        color: "#e5e7eb",
+        color: "#333333",
         fontSize: 10,
         marginBottom: 4
     },
-    // Appendix styles
-    appendixTitle: {
-        fontSize: 14,
-        color: "#22c55e",
-        fontWeight: "bold",
-        marginTop: 24,
-        marginBottom: 12
-    },
-    // Version control
-    versionControl: {
-        marginTop: 30,
-        paddingTop: 15,
-        borderTopWidth: 1,
-        borderTopColor: "#374151"
-    },
-    versionTitle: {
-        fontSize: 12,
-        color: "#ffffff",
-        fontWeight: "bold",
-        marginBottom: 8
-    },
-    // Quality checks box
-    qualityBox: {
-        backgroundColor: "#1e293b",
-        borderLeftWidth: 3,
-        borderLeftColor: "#22c55e",
-        padding: 10,
-        marginVertical: 12
-    },
-    qualityTitle: {
-        fontSize: 10,
-        fontWeight: "bold",
-        color: "#22c55e",
-        marginBottom: 4
-    },
-    // Outputs box
-    outputsBox: {
-        backgroundColor: "#1e293b",
-        borderLeftWidth: 3,
-        borderLeftColor: "#3b82f6",
-        padding: 10,
-        marginVertical: 12
-    },
-    outputsTitle: {
-        fontSize: 10,
-        fontWeight: "bold",
-        color: "#3b82f6",
-        marginBottom: 4
-    }
 });
 
 const bulletPoint = "• ";
 const numberedPoint = (num) => `${num}. `;
 
-export default function Methodology({ 
+export default function Methodology({
     companyName = "Display name of company",
     generatedDate = new Date().toLocaleDateString()
 }) {
@@ -284,7 +112,7 @@ export default function Methodology({
                 <Text style={styles.methodologyAlignment}>
                     (Aligned to ISO 22301 and DRI International 10 Professional Practices)
                 </Text>
-                
+
                 <View style={styles.divider} />
             </View>
 
@@ -305,31 +133,31 @@ export default function Methodology({
 
             {/* Section 2: Guiding principles */}
             <Text style={styles.sectionTitle}>2. Guiding principles</Text>
-            
+
             <View style={styles.principlesBox}>
                 <Text style={styles.principlesTitle}>Guiding principles</Text>
-                
+
                 <View style={styles.numberedList}>
                     <Text style={styles.numberedItem}>
                         <Text style={styles.bold}>{numberedPoint(1)}Business-led, enterprise-enabled</Text>
                         <Text style={styles.paragraph}>Priorities and recovery requirements owned by business leadership. Enabling functions provide feasibility validation and recovery capability.</Text>
                     </Text>
-                    
+
                     <Text style={styles.numberedItem}>
                         <Text style={styles.bold}>{numberedPoint(2)}Impact and time drive priorities</Text>
                         <Text style={styles.paragraph}>Prioritization based on impact over time, not organizational hierarchy.</Text>
                     </Text>
-                    
+
                     <Text style={styles.numberedItem}>
                         <Text style={styles.bold}>{numberedPoint(3)}Strategies create capability, plans enable execution</Text>
                         <Text style={styles.paragraph}>Strategies and solutions selected to meet defined recovery requirements. Plans translate capability into executable actions.</Text>
                     </Text>
-                    
+
                     <Text style={styles.numberedItem}>
                         <Text style={styles.bold}>{numberedPoint(4)}Simplicity and usability</Text>
                         <Text style={styles.paragraph}>Plans and tools designed for use under stress with limited information and constrained access to systems and facilities.</Text>
                     </Text>
-                    
+
                     <Text style={styles.numberedItem}>
                         <Text style={styles.bold}>{numberedPoint(5)}Evidence-based and continually improving</Text>
                         <Text style={styles.paragraph}>Exercises, incidents, and audits produce measurable improvements tracked to closure.</Text>
@@ -344,7 +172,7 @@ export default function Methodology({
             <Text style={styles.paragraph}>
                 The BCMS lifecycle executed at least annually and updated when major changes occur:
             </Text>
-            
+
             <View style={styles.numberedList}>
                 <Text style={styles.numberedItem}>{numberedPoint(1)}Program initiation and governance (DRI PP1; ISO Clauses 4–6)</Text>
                 <Text style={styles.numberedItem}>{numberedPoint(2)}Risk assessment (DRI PP2; ISO 8.2.3)</Text>
@@ -362,7 +190,7 @@ export default function Methodology({
 
             {/* Section 4: Roles and decision rights */}
             <Text style={styles.sectionTitle}>4. Roles and decision rights</Text>
-            
+
             <View style={styles.roleSection}>
                 <Text style={styles.roleTitle}>Leadership (Accountable)</Text>
                 <View style={styles.bulletList}>

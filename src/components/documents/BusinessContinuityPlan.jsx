@@ -1,287 +1,286 @@
 import React from "react";
-import { Text, View, StyleSheet, Page } from "@react-pdf/renderer";
-import BaseDocument from "../pdf/BaseDocument";
+import { Text, View, StyleSheet, Document } from "@react-pdf/renderer";
+import { PageWrapper } from "../pdf/BaseDocument";
 
+// Black & white styles — no colors for fast rendering
 const styles = StyleSheet.create({
-    // Base page style
-    basePage: {
-        backgroundColor: "#2b2b2b",
-        padding: 40,
-        paddingTop: 70,
+    page: {
+        padding: "40 40 70 40",
         fontSize: 10,
+        color: "#111111",
     },
-    
-    // Cover Page
     coverPage: {
-        backgroundColor: "#2b2b2b",
-        padding: 40,
-        paddingTop: 100,
+        padding: "40 40 70 40",
+        justifyContent: "center",
+        alignItems: "center",
+    },
+
+    // Typography
+    title: {
+        fontSize: 24,
+        color: "#111111",
+        fontWeight: "bold",
+        textAlign: "center",
     },
     coverTitle: {
         fontSize: 24,
-        color: "#ffffff",
+        color: "#111111",
         fontWeight: "bold",
         marginBottom: 12,
         marginTop: 80,
-        textAlign: "center"
+        textAlign: "center",
     },
     coverDate: {
-        color: "#9ca3af",
+        color: "#555555",
         fontSize: 11,
         marginTop: 8,
-        textAlign: "center"
+        textAlign: "center",
     },
-    
-    // Table of Contents
-    tocTitle: {
-        fontSize: 18,
-        color: "#1e40af",
-        fontWeight: "bold",
-        marginBottom: 16
-    },
-    tocItem: {
-        flexDirection: "row",
-        marginBottom: 6,
-        alignItems: "baseline"
-    },
-    tocSection: {
-        width: 30,
-        color: "#e5e7eb",
-        fontSize: 10
-    },
-    tocText: {
-        flex: 1,
-        color: "#e5e7eb",
-        fontSize: 10,
-        borderBottomWidth: 1,
-        borderBottomColor: "#1e40af",
-        borderBottomStyle: "dotted",
-        marginRight: 4
-    },
-    tocPage: {
-        color: "#e5e7eb",
-        fontSize: 10,
-        width: 28,
-        textAlign: "right"
-    },
-    
-    // Section Styles
-    sectionTitle: {
-        color: "#22c55e",
-        fontSize: 16,
-        fontWeight: "bold",
-        marginTop: 24,
-        marginBottom: 12,
-        textAlign: "left"
-    },
+
+    // Section headers
     sectionNumber: {
         fontSize: 20,
-        color: "#1e40af",
+        color: "#111111",
         fontWeight: "bold",
         marginBottom: 15,
-        marginTop: 10
+        marginTop: 10,
+    },
+    sectionTitle: {
+        fontSize: 18,
+        color: "#111111",
+        fontWeight: "bold",
+        marginBottom: 16,
     },
     subsectionTitle: {
-        color: "#ffffff",
         fontSize: 13,
+        color: "#111111",
         fontWeight: "bold",
         marginTop: 18,
         marginBottom: 8,
-        textAlign: "left"
+    },
+
+    // Text styles
+    text: {
+        lineHeight: 1.6,
+        color: "#111111",
+        marginBottom: 10,
+        fontSize: 10,
     },
     paragraph: {
         lineHeight: 1.6,
-        color: "#e5e7eb",
+        color: "#111111",
         marginBottom: 10,
         fontSize: 10,
         textAlign: "justify",
-        textIndent: 0
     },
     italicText: {
         fontStyle: "italic",
-        color: "#9ca3af"
+        color: "#555555",
+        marginBottom: 10,
+        fontSize: 10,
     },
-    
-    // Bullet Lists
+    bold: {
+        fontWeight: "bold",
+        color: "#111111",
+    },
+    placeholder: {
+        color: "#555555",
+        fontStyle: "italic",
+        fontSize: 9,
+        marginBottom: 10,
+    },
+
+    // Lists
     bulletList: {
         marginLeft: 15,
-        marginBottom: 10
+        marginBottom: 10,
     },
     bulletItem: {
         lineHeight: 1.5,
-        color: "#e5e7eb",
+        color: "#111111",
         fontSize: 10,
         marginBottom: 4,
-        textAlign: "justify"
     },
     numberedList: {
         marginLeft: 20,
-        marginBottom: 10
+        marginBottom: 10,
     },
     numberedItem: {
         lineHeight: 1.5,
-        color: "#e5e7eb",
+        color: "#111111",
         fontSize: 10,
         marginBottom: 6,
-        textAlign: "justify"
     },
     nestedBullet: {
         marginLeft: 15,
         marginTop: 2,
-        marginBottom: 2
+        marginBottom: 2,
     },
     nestedBulletItem: {
         lineHeight: 1.4,
-        color: "#e5e7eb",
+        color: "#111111",
         fontSize: 9,
-        marginBottom: 2
+        marginBottom: 2,
     },
-    
-    // Divider
-    divider: {
+    smallBullet: {
+        fontSize: 8,
+        marginLeft: 0,
+        marginBottom: 2,
+        color: "#111111",
+    },
+
+    // Table of Contents
+    tocItem: {
+        flexDirection: "row",
+        marginBottom: 6,
+        alignItems: "baseline",
+    },
+    tocSection: {
+        width: 30,
+        color: "#111111",
+        fontSize: 10,
+    },
+    tocText: {
+        flex: 1,
+        color: "#111111",
+        fontSize: 10,
         borderBottomWidth: 1,
-        borderBottomColor: "#374151",
-        marginVertical: 16
+        borderBottomColor: "#cccccc",
+        borderBottomStyle: "dotted",
+        marginRight: 4,
     },
-    
+    tocPage: {
+        color: "#111111",
+        fontSize: 10,
+        width: 28,
+        textAlign: "right",
+    },
+
     // Tables
     table: {
-        marginTop: 15,
-        marginBottom: 15,
+        marginVertical: 15,
         borderWidth: 1,
-        borderColor: "#374151",
-        borderStyle: "solid"
+        borderColor: "#cccccc",
     },
     tableRow: {
         flexDirection: "row",
         borderBottomWidth: 1,
-        borderBottomColor: "#374151"
+        borderBottomColor: "#cccccc",
     },
     tableHeader: {
-        backgroundColor: "#1f2937"
+        backgroundColor: "#f3f4f6",
     },
-    tableCell: {
+    cell: {
         padding: 8,
         fontSize: 9,
-        color: "#e5e7eb"
+        color: "#111111",
     },
-    tableCellBold: {
+    cellBold: {
         padding: 8,
         fontSize: 9,
-        color: "#ffffff",
-        fontWeight: "bold"
-    },
-    
-    // Column widths for various tables
-    col1: { width: "25%" },
-    col2: { width: "25%" },
-    col3: { width: "25%" },
-    col4: { width: "25%" },
-    colTeam: { width: "20%" },
-    colMembers: { width: "35%" },
-    colResp: { width: "45%" },
-    colDept: { width: "15%" },
-    colProcess: { width: "25%" },
-    colRTO: { width: "15%" },
-    colProcedures: { width: "45%" },
-    colPlanSection: { width: "25%" },
-    colISO: { width: "20%" },
-    colDRI: { width: "15%" },
-    colWhy: { width: "40%" },
-    colRTO: { width: "15%" },
-    colCount: { width: "20%" },
-    colPercent: { width: "20%" },
-    
-    smallBullet: {
-        fontSize: 8,
-        marginLeft: 0,
-        marginBottom: 2
-    },
-    
-    // Bold text
-    bold: {
+        color: "#111111",
         fontWeight: "bold",
-        color: "#ffffff"
     },
-    
-    // Placeholder text
-    placeholder: {
-        color: "#f59e0b",
-        fontStyle: "italic",
-        fontSize: 9
-    },
-    
-    // First 48 Hours box
+
+    // Column width utilities
+    colSmall: { flex: 1 },
+    colMedium: { flex: 2 },
+    colLarge: { flex: 3 },
+    colXLarge: { flex: 4 },
+
+    colTeam: { flex: 1.5 },
+    colMembers: { flex: 2.5 },
+    colResp: { flex: 3 },
+    colDept: { flex: 1.2 },
+    colProcess: { flex: 2 },
+    colRTO: { flex: 1 },
+    colProcedures: { flex: 3.5 },
+    colPlanSection: { flex: 2 },
+    colISO: { flex: 1.5 },
+    colDRI: { flex: 1.2 },
+    colWhy: { flex: 3 },
+    colCount: { flex: 1.2 },
+    colPercent: { flex: 1.2 },
+
+    // Box styles
     criticalBox: {
-        backgroundColor: "#1e293b",
+        backgroundColor: "#f9fafb",
         borderLeftWidth: 4,
-        borderLeftColor: "#ef4444",
+        borderLeftColor: "#111111",
         padding: 10,
-        marginVertical: 12
+        marginVertical: 12,
     },
     criticalTitle: {
         fontSize: 12,
         fontWeight: "bold",
-        color: "#ef4444",
-        marginBottom: 8
+        color: "#111111",
+        marginBottom: 8,
     },
-    
-    // Intent box
     intentBox: {
-        backgroundColor: "#1f2937",
+        backgroundColor: "#f3f4f6",
         padding: 10,
         marginVertical: 8,
-        borderRadius: 4
+        borderRadius: 4,
     },
     intentTitle: {
         fontSize: 10,
         fontWeight: "bold",
-        color: "#22c55e",
-        marginBottom: 4
+        color: "#111111",
+        marginBottom: 4,
     },
-    intentText: {
-        fontSize: 10,
-        color: "#e5e7eb",
-        lineHeight: 1.5
+
+    // Dividers and containers
+    divider: {
+        borderBottomWidth: 1,
+        borderBottomColor: "#cccccc",
+        marginVertical: 16,
     },
-    
-    // Version control
     versionControl: {
         marginTop: 30,
         paddingTop: 15,
         borderTopWidth: 1,
-        borderTopColor: "#374151"
+        borderTopColor: "#cccccc",
     },
     versionTitle: {
         fontSize: 12,
-        color: "#ffffff",
+        color: "#111111",
         fontWeight: "bold",
-        marginBottom: 8
-    }
+        marginBottom: 8,
+    },
+
+    // Layout utilities
+    flexCenter: {
+        flex: 1,
+        justifyContent: "center",
+        alignItems: "center",
+    },
+    flexRow: {
+        flexDirection: "row",
+    },
 });
 
 const bulletPoint = "• ";
 const numberedPoint = (num) => `${num}. `;
 
-export default function BusinessContinuityPlan({ 
+export default function BusinessContinuityPlan({
     companyName = "DISPLAY NAME OF COMPANY",
     generatedDate = new Date().toLocaleDateString()
 }) {
     return (
-        <BaseDocument title="Business Continuity Plan">
+        <Document>
             {/* Cover Page */}
-            <Page style={styles.coverPage}>
-                <View style={{ flex: 1, justifyContent: "center" }}>
+            <PageWrapper title="Business Continuity Plan">
+                <View style={styles.flexCenter}>
                     <Text style={styles.coverTitle}>BUSINESS CONTINUITY PLAN FOR</Text>
                     <Text style={styles.coverTitle}>{companyName}</Text>
                     <Text style={styles.coverDate}>DATE: {generatedDate}</Text>
                 </View>
-            </Page>
+            </PageWrapper>
 
             {/* Table of Contents */}
-            <Page style={styles.basePage}>
-                <Text style={styles.tocTitle}>Table of Contents</Text>
-                
+            <PageWrapper title="Business Continuity Plan">
+                <Text style={styles.sectionTitle}>Table of Contents</Text>
+
                 <View style={styles.tocItem}>
                     <Text style={styles.tocSection}></Text>
                     <Text style={styles.tocText}>First 48 Hours</Text>
@@ -307,7 +306,7 @@ export default function BusinessContinuityPlan({
                     <Text style={styles.tocText}>Most Critical Applications</Text>
                     <Text style={styles.tocPage}>4</Text>
                 </View>
-                
+
                 <View style={styles.tocItem}>
                     <Text style={styles.tocSection}>1</Text>
                     <Text style={styles.tocText}>Introduction</Text>
@@ -353,7 +352,7 @@ export default function BusinessContinuityPlan({
                     <Text style={styles.tocText}>Roles & Responsibilities</Text>
                     <Text style={styles.tocPage}>8</Text>
                 </View>
-                
+
                 <View style={styles.tocItem}>
                     <Text style={styles.tocSection}></Text>
                     <Text style={styles.tocText}>Business Continuity Plan</Text>
@@ -394,7 +393,7 @@ export default function BusinessContinuityPlan({
                     <Text style={styles.tocText}>Return to Business as Usual</Text>
                     <Text style={styles.tocPage}>11</Text>
                 </View>
-                
+
                 <View style={styles.tocItem}>
                     <Text style={styles.tocSection}>2</Text>
                     <Text style={styles.tocText}>Plan Maintenance</Text>
@@ -415,10 +414,10 @@ export default function BusinessContinuityPlan({
                     <Text style={styles.tocText}>Version Control</Text>
                     <Text style={styles.tocPage}>16</Text>
                 </View>
-            </Page>
+            </PageWrapper>
 
             {/* First 48 Hours */}
-            <Page style={styles.basePage}>
+            <PageWrapper title="Business Continuity Plan">
                 <View style={styles.criticalBox}>
                     <Text style={styles.criticalTitle}>First 48 Hours</Text>
                     <Text style={styles.paragraph}>
@@ -427,7 +426,7 @@ export default function BusinessContinuityPlan({
 
                     <Text style={styles.subsectionTitle}>Immediate Actions</Text>
                     <Text style={styles.italicText}>Common sense and situational awareness should guide decisions</Text>
-                    
+
                     <View style={styles.bulletList}>
                         <Text style={styles.bulletItem}>
                             <Text style={styles.bold}>Protect life and prevent harm</Text>
@@ -437,7 +436,7 @@ export default function BusinessContinuityPlan({
                                 <Text style={styles.nestedBulletItem}>{bulletPoint}Do not enter unsafe areas.</Text>
                             </View>
                         </Text>
-                        
+
                         <Text style={styles.bulletItem}>
                             <Text style={styles.bold}>Make the incident official</Text>
                             <View style={styles.nestedBullet}>
@@ -445,7 +444,7 @@ export default function BusinessContinuityPlan({
                                 <Text style={styles.nestedBulletItem}>{bulletPoint}Declare an incident if people, facilities, critical systems, or core operations are impacted.</Text>
                             </View>
                         </Text>
-                        
+
                         <Text style={styles.bulletItem}>
                             <Text style={styles.bold}>Stabilize the situation</Text>
                             <View style={styles.nestedBullet}>
@@ -453,7 +452,7 @@ export default function BusinessContinuityPlan({
                                 <Text style={styles.nestedBulletItem}>{bulletPoint}Only if safe, secure the area, protect critical assets, and preserve evidence.</Text>
                             </View>
                         </Text>
-                        
+
                         <Text style={styles.bulletItem}>
                             <Text style={styles.bold}>Start an incident log</Text>
                             <View style={styles.nestedBullet}>
@@ -461,7 +460,7 @@ export default function BusinessContinuityPlan({
                                 <Text style={styles.nestedBulletItem}>{bulletPoint}Track decisions, owners, and timestamps.</Text>
                             </View>
                         </Text>
-                        
+
                         <Text style={styles.bulletItem}>
                             <Text style={styles.bold}>Shift to continuity mode</Text>
                             <View style={styles.nestedBullet}>
@@ -480,14 +479,14 @@ export default function BusinessContinuityPlan({
                                 <Text style={styles.nestedBulletItem}>{bulletPoint}Include: confirmed facts, safety instruction, what to do now, when the next update is coming, and who is leading. Proceed with internal messaging with understanding that it may leak externally by accidental or intentional means.</Text>
                             </View>
                         </Text>
-                        
+
                         <Text style={styles.bulletItem}>
                             <Text style={styles.bold}>Escalate to the right functions</Text>
                             <View style={styles.nestedBullet}>
                                 <Text style={styles.nestedBulletItem}>{bulletPoint}Leadership, Operations, IT/InfoSec, HR, Facilities, Legal/Compliance, Customer lead, Communications lead (as applicable).</Text>
                             </View>
                         </Text>
-                        
+
                         <Text style={styles.bulletItem}>
                             <Text style={styles.bold}>Control external messaging</Text>
                             <View style={styles.nestedBullet}>
@@ -496,7 +495,7 @@ export default function BusinessContinuityPlan({
                                 <Text style={styles.nestedBulletItem}>{bulletPoint}Ensure external messaging is aligned with internal messaging.</Text>
                             </View>
                         </Text>
-                        
+
                         <Text style={styles.bulletItem}>
                             <Text style={styles.bold}>Set an update cadence</Text>
                             <View style={styles.nestedBullet}>
@@ -517,12 +516,12 @@ export default function BusinessContinuityPlan({
                     The applications listed below have been identified in the platform as essential enablers of the highest priority processes, based on collected assessment data, and they must be recovered within 2 days or less to support timely continuity and restoration of operations. See section 2 for a full list of critical applications.
                 </Text>
                 <Text style={styles.placeholder}>[INSERT LIST OF ALL CRITICAL APPLICATIONS THAT HAVE RTOs OF 2 DAYS OR LESS]</Text>
-            </Page>
+            </PageWrapper>
 
             {/* Section 1: Introduction */}
-            <Page style={styles.basePage}>
+            <PageWrapper title="Business Continuity Plan">
                 <Text style={styles.sectionNumber}>1. Introduction</Text>
-                
+
                 <Text style={styles.subsectionTitle}>Purpose</Text>
                 <Text style={styles.paragraph}>
                     This Business Continuity Plan (BCP) establishes the framework and high-level requirements for preparing for, responding to, and recovering from disruptive incidents that could affect the organization's ability to deliver its critical products and services. The plan supports operational resilience by defining a consistent approach to continuity planning, clarifying responsibilities, and setting expectations for readiness, response coordination, and recovery.
@@ -569,10 +568,10 @@ export default function BusinessContinuityPlan({
                         <Text style={styles.paragraph}>Provide timely, accurate, and consistent communications to employees, customers, suppliers, regulators (as applicable), and other stakeholders through defined roles, channels, and approval paths (aligned to ISO 22301 communications expectations).</Text>
                     </Text>
                 </View>
-            </Page>
+            </PageWrapper>
 
             {/* Continue Introduction sections */}
-            <Page style={styles.basePage}>
+            <PageWrapper title="Business Continuity Plan">
                 <Text style={styles.subsectionTitle}>Intent</Text>
                 <Text style={styles.paragraph}>
                     The organization is committed to maintaining continuity of prioritized operations during disruptive incidents, consistent with its strategic direction, risk context, and stakeholder expectations. The organization will:
@@ -619,22 +618,22 @@ export default function BusinessContinuityPlan({
                 <View style={styles.table}>
                     <View style={[styles.tableRow, styles.tableHeader]}>
                         <View style={styles.colTeam}>
-                            <Text style={styles.tableCellBold}>Team Name</Text>
+                            <Text style={styles.cellBold}>Team Name</Text>
                         </View>
                         <View style={styles.colMembers}>
-                            <Text style={styles.tableCellBold}>Members</Text>
+                            <Text style={styles.cellBold}>Members</Text>
                         </View>
                         <View style={styles.colResp}>
-                            <Text style={styles.tableCellBold}>Responsibility</Text>
+                            <Text style={styles.cellBold}>Responsibility</Text>
                         </View>
                     </View>
 
                     <View style={styles.tableRow}>
                         <View style={styles.colTeam}>
-                            <Text style={styles.tableCellBold}>Leadership</Text>
+                            <Text style={styles.cellBold}>Leadership</Text>
                         </View>
                         <View style={styles.colMembers}>
-                            <Text style={styles.tableCell}>[POPULATE WITH ROLE BASED TEAM MEMBERS]</Text>
+                            <Text style={styles.cell}>[POPULATE WITH ROLE BASED TEAM MEMBERS]</Text>
                         </View>
                         <View style={styles.colResp}>
                             <Text style={styles.smallBullet}>{bulletPoint}Has authority to declare a disaster</Text>
@@ -648,10 +647,10 @@ export default function BusinessContinuityPlan({
 
                     <View style={styles.tableRow}>
                         <View style={styles.colTeam}>
-                            <Text style={styles.tableCellBold}>Continuity Coordinators</Text>
+                            <Text style={styles.cellBold}>Continuity Coordinators</Text>
                         </View>
                         <View style={styles.colMembers}>
-                            <Text style={styles.tableCell}>[SAME AS ABOVE]</Text>
+                            <Text style={styles.cell}>[SAME AS ABOVE]</Text>
                         </View>
                         <View style={styles.colResp}>
                             <Text style={styles.smallBullet}>{bulletPoint}Run individual business continuity plan efforts</Text>
@@ -662,10 +661,10 @@ export default function BusinessContinuityPlan({
 
                     <View style={styles.tableRow}>
                         <View style={styles.colTeam}>
-                            <Text style={styles.tableCellBold}>Life Safety</Text>
+                            <Text style={styles.cellBold}>Life Safety</Text>
                         </View>
                         <View style={styles.colMembers}>
-                            <Text style={styles.tableCell}>[SAME AS ABOVE]</Text>
+                            <Text style={styles.cell}>[SAME AS ABOVE]</Text>
                         </View>
                         <View style={styles.colResp}>
                             <Text style={styles.smallBullet}>{bulletPoint}Assess life-safety and employee wellness issues</Text>
@@ -675,10 +674,10 @@ export default function BusinessContinuityPlan({
 
                     <View style={styles.tableRow}>
                         <View style={styles.colTeam}>
-                            <Text style={styles.tableCellBold}>Damage Assessment</Text>
+                            <Text style={styles.cellBold}>Damage Assessment</Text>
                         </View>
                         <View style={styles.colMembers}>
-                            <Text style={styles.tableCell}>[SAME AS ABOVE]</Text>
+                            <Text style={styles.cell}>[SAME AS ABOVE]</Text>
                         </View>
                         <View style={styles.colResp}>
                             <Text style={styles.smallBullet}>{bulletPoint}Assess physical and technological damage and reports back to the Leadership</Text>
@@ -688,10 +687,10 @@ export default function BusinessContinuityPlan({
 
                     <View style={styles.tableRow}>
                         <View style={styles.colTeam}>
-                            <Text style={styles.tableCellBold}>Technology</Text>
+                            <Text style={styles.cellBold}>Technology</Text>
                         </View>
                         <View style={styles.colMembers}>
-                            <Text style={styles.tableCell}>[SAME AS ABOVE]</Text>
+                            <Text style={styles.cell}>[SAME AS ABOVE]</Text>
                         </View>
                         <View style={styles.colResp}>
                             <Text style={styles.smallBullet}>{bulletPoint}Responsible for the technology recovery</Text>
@@ -701,10 +700,10 @@ export default function BusinessContinuityPlan({
 
                     <View style={styles.tableRow}>
                         <View style={styles.colTeam}>
-                            <Text style={styles.tableCellBold}>Team Member</Text>
+                            <Text style={styles.cellBold}>Team Member</Text>
                         </View>
                         <View style={styles.colMembers}>
-                            <Text style={styles.tableCell}>All persons not included in any of the above designated roles</Text>
+                            <Text style={styles.cell}>All persons not included in any of the above designated roles</Text>
                         </View>
                         <View style={styles.colResp}>
                             <Text style={styles.smallBullet}>{bulletPoint}Executes assigned recovery duties, including notifications and check ins, recovery tasks and workarounds, and coordination with internal and external partners, while maintaining appropriate confidentiality.</Text>
@@ -712,12 +711,12 @@ export default function BusinessContinuityPlan({
                         </View>
                     </View>
                 </View>
-            </Page>
+            </PageWrapper>
 
             {/* Business Continuity Plan Details */}
-            <Page style={styles.basePage}>
-                <Text style={styles.sectionTitle}>Business Continuity Plan</Text>
-                
+            <PageWrapper title="Business Continuity Plan">
+                <Text style={styles.sectionNumber}>Business Continuity Plan</Text>
+
                 <Text style={styles.subsectionTitle}>Business Impact Analysis Summary</Text>
                 <Text style={styles.paragraph}>The following is a distribution of the critical process recovery times.</Text>
                 <Text style={styles.italicText}>[THE BELOW ARE ILLUSTRATIVE TABLES AND CHARTS. WE SHOULD BE ABLE TO PULL THE SAME CHARTS FROM THE DASHBOARD]</Text>
@@ -726,13 +725,13 @@ export default function BusinessContinuityPlan({
                 <View style={styles.table}>
                     <View style={[styles.tableRow, styles.tableHeader]}>
                         <View style={styles.colRTO}>
-                            <Text style={styles.tableCellBold}>RTO Days</Text>
+                            <Text style={styles.cellBold}>RTO Days</Text>
                         </View>
                         <View style={styles.colCount}>
-                            <Text style={styles.tableCellBold}># Count</Text>
+                            <Text style={styles.cellBold}># Count</Text>
                         </View>
                         <View style={styles.colPercent}>
-                            <Text style={styles.tableCellBold}>% Count</Text>
+                            <Text style={styles.cellBold}>% Count</Text>
                         </View>
                     </View>
 
@@ -750,26 +749,26 @@ export default function BusinessContinuityPlan({
                     ].map((row, idx) => (
                         <View key={idx} style={styles.tableRow}>
                             <View style={styles.colRTO}>
-                                <Text style={styles.tableCell}>{row.rto}</Text>
+                                <Text style={styles.cell}>{row.rto}</Text>
                             </View>
                             <View style={styles.colCount}>
-                                <Text style={styles.tableCell}>{row.count}</Text>
+                                <Text style={styles.cell}>{row.count}</Text>
                             </View>
                             <View style={styles.colPercent}>
-                                <Text style={styles.tableCell}>{row.percent}</Text>
+                                <Text style={styles.cell}>{row.percent}</Text>
                             </View>
                         </View>
                     ))}
 
                     <View style={styles.tableRow}>
                         <View style={styles.colRTO}>
-                            <Text style={styles.tableCellBold}>TOTALS</Text>
+                            <Text style={styles.cellBold}>TOTALS</Text>
                         </View>
                         <View style={styles.colCount}>
-                            <Text style={styles.tableCellBold}>47</Text>
+                            <Text style={styles.cellBold}>47</Text>
                         </View>
                         <View style={styles.colPercent}>
-                            <Text style={styles.tableCellBold}>100%</Text>
+                            <Text style={styles.cellBold}>100%</Text>
                         </View>
                     </View>
                 </View>
@@ -784,28 +783,28 @@ export default function BusinessContinuityPlan({
                 <View style={styles.table}>
                     <View style={[styles.tableRow, styles.tableHeader]}>
                         <View style={styles.colDept}>
-                            <Text style={styles.tableCellBold}>Department</Text>
+                            <Text style={styles.cellBold}>Department</Text>
                         </View>
                         <View style={styles.colProcess}>
-                            <Text style={styles.tableCellBold}>Critical Process</Text>
+                            <Text style={styles.cellBold}>Critical Process</Text>
                         </View>
                         <View style={styles.colRTO}>
-                            <Text style={styles.tableCellBold}>RTO</Text>
+                            <Text style={styles.cellBold}>RTO</Text>
                         </View>
                         <View style={styles.colProcedures}>
-                            <Text style={styles.tableCellBold}>Recovery Procedures</Text>
+                            <Text style={styles.cellBold}>Recovery Procedures</Text>
                         </View>
                     </View>
 
                     <View style={styles.tableRow}>
                         <View style={styles.colDept}>
-                            <Text style={styles.tableCell}>Finance</Text>
+                            <Text style={styles.cell}>Finance</Text>
                         </View>
                         <View style={styles.colProcess}>
-                            <Text style={styles.tableCell}>General Ledger</Text>
+                            <Text style={styles.cell}>General Ledger</Text>
                         </View>
                         <View style={styles.colRTO}>
-                            <Text style={styles.tableCell}>2 Days</Text>
+                            <Text style={styles.cell}>2 Days</Text>
                         </View>
                         <View style={styles.colProcedures}>
                             <Text style={styles.smallBullet}>{bulletPoint}Loss of Workspace: Shift to remote or alternate site; ensure secure remote access to ledger software and backups.</Text>
@@ -832,7 +831,7 @@ export default function BusinessContinuityPlan({
                 <Text style={styles.paragraph}>
                     Deactivating the BCP and returning to normal operations involves a series of carefully planned steps. This process ensures that the transition is smooth, risks are managed effectively, and operations can resume without significant issues. The following are the typical processes and procedures that can be follow:
                 </Text>
-                
+
                 <View style={styles.numberedList}>
                     <Text style={styles.numberedItem}>
                         <Text style={styles.bold}>Assessment and Decision-Making</Text> - Conduct a thorough assessment of the situation that led to the activation of the plan. Determine if the conditions have stabilized enough to consider deactivation. Consult stakeholders, including department heads, Corporate, and external partners, to gather insights and make an informed decision.
@@ -865,14 +864,14 @@ export default function BusinessContinuityPlan({
                         <Text style={styles.bold}>Continuous Improvement</Text> - Integrate the lessons learned into the properties ongoing risk management and recovery planning efforts to strengthen resilience against future disruptions.
                     </Text>
                 </View>
-                
+
                 <Text style={styles.paragraph}>
                     This structured approach ensures that the organization transitions back to normal operations efficiently and effectively, minimizing risk and ensuring the well-being of all stakeholders.
                 </Text>
-            </Page>
+            </PageWrapper>
 
             {/* Plan Maintenance */}
-            <Page style={styles.basePage}>
+            <PageWrapper title="Business Continuity Plan">
                 <Text style={styles.sectionNumber}>2. Plan Maintenance</Text>
                 <Text style={styles.paragraph}>
                     Maintaining the BCP is crucial to ensuring that it remains effective and relevant, especially given the dynamic nature of the hospitality industry. Regular maintenance and updates to the plan can help prepare for, respond to, and recover from disruptions efficiently.
@@ -891,14 +890,14 @@ export default function BusinessContinuityPlan({
                             <Text style={styles.nestedBulletItem}>{bulletPoint}Update the plan to incorporate changes in the company's structure, new technologies, updated contact lists, and lessons learned from recent incidents or drills.</Text>
                         </View>
                     </Text>
-                    
+
                     <Text style={styles.numberedItem}>
                         <Text style={styles.bold}>Continuous Monitoring for Changes</Text>
                         <View style={styles.nestedBullet}>
                             <Text style={styles.nestedBulletItem}>{bulletPoint}Establish a process for ongoing monitoring of internal changes (e.g., renovations, new services, changes in staffing) and external changes (e.g., regulatory updates, changes in the threat landscape) that may necessitate updates to the plan.</Text>
                         </View>
                     </Text>
-                    
+
                     <Text style={styles.numberedItem}>
                         <Text style={styles.bold}>Training and Drills</Text>
                         <View style={styles.nestedBullet}>
@@ -906,7 +905,7 @@ export default function BusinessContinuityPlan({
                             <Text style={styles.nestedBulletItem}>{bulletPoint}Organize annual drills to practice the plan in simulated scenarios. This helps identify areas of improvement and ensures the plan's effectiveness in real-world situations.</Text>
                         </View>
                     </Text>
-                    
+
                     <Text style={styles.numberedItem}>
                         <Text style={styles.bold}>Engagement of Stakeholders</Text>
                         <View style={styles.nestedBullet}>
@@ -914,7 +913,7 @@ export default function BusinessContinuityPlan({
                             <Text style={styles.nestedBulletItem}>{bulletPoint}Maintain good communication with stakeholders about any changes to the plan and the reasons for those changes.</Text>
                         </View>
                     </Text>
-                    
+
                     <Text style={styles.numberedItem}>
                         <Text style={styles.bold}>Evaluation of Technological Tools</Text>
                         <View style={styles.nestedBullet}>
@@ -922,7 +921,7 @@ export default function BusinessContinuityPlan({
                             <Text style={styles.nestedBulletItem}>{bulletPoint}Ensure that any new technology adopted is integrated into the plan.</Text>
                         </View>
                     </Text>
-                    
+
                     <Text style={styles.numberedItem}>
                         <Text style={styles.bold}>Regulatory Compliance and Best Practices</Text>
                         <View style={styles.nestedBullet}>
@@ -930,7 +929,7 @@ export default function BusinessContinuityPlan({
                             <Text style={styles.nestedBulletItem}>{bulletPoint}Consult with industry experts and participate in relevant forums or groups to stay informed about the latest trends and standards in business continuity planning.</Text>
                         </View>
                     </Text>
-                    
+
                     <Text style={styles.numberedItem}>
                         <Text style={styles.bold}>Documentation and Accessibility</Text>
                         <View style={styles.nestedBullet}>
@@ -938,7 +937,7 @@ export default function BusinessContinuityPlan({
                             <Text style={styles.nestedBulletItem}>{bulletPoint}Maintain multiple accessible copies of the updated plan in secure, yet easily accessible locations, both physically and digitally.</Text>
                         </View>
                     </Text>
-                    
+
                     <Text style={styles.numberedItem}>
                         <Text style={styles.bold}>Review of External Partners and Suppliers</Text>
                         <View style={styles.nestedBullet}>
@@ -946,7 +945,7 @@ export default function BusinessContinuityPlan({
                             <Text style={styles.nestedBulletItem}>{bulletPoint}Update agreements with suppliers and partners as needed to reflect any changes in the plan.</Text>
                         </View>
                     </Text>
-                    
+
                     <Text style={styles.numberedItem}>
                         <Text style={styles.bold}>Reporting and Record-Keeping</Text>
                         <View style={styles.nestedBullet}>
@@ -960,21 +959,21 @@ export default function BusinessContinuityPlan({
                 </Text>
 
                 <Text style={styles.subsectionTitle}>Plan Alignment to Standards</Text>
-                
+
                 {/* Standards Alignment Table */}
                 <View style={styles.table}>
                     <View style={[styles.tableRow, styles.tableHeader]}>
                         <View style={styles.colPlanSection}>
-                            <Text style={styles.tableCellBold}>Plan Section</Text>
+                            <Text style={styles.cellBold}>Plan Section</Text>
                         </View>
                         <View style={styles.colISO}>
-                            <Text style={styles.tableCellBold}>ISO 22301</Text>
+                            <Text style={styles.cellBold}>ISO 22301</Text>
                         </View>
                         <View style={styles.colDRI}>
-                            <Text style={styles.tableCellBold}>DRI PP</Text>
+                            <Text style={styles.cellBold}>DRI PP</Text>
                         </View>
                         <View style={styles.colWhy}>
-                            <Text style={styles.tableCellBold}>Why it maps</Text>
+                            <Text style={styles.cellBold}>Why it maps</Text>
                         </View>
                     </View>
 
@@ -1003,16 +1002,16 @@ export default function BusinessContinuityPlan({
                     ].map((row, idx) => (
                         <View key={idx} style={styles.tableRow}>
                             <View style={styles.colPlanSection}>
-                                <Text style={styles.tableCellBold}>{row.section}</Text>
+                                <Text style={styles.cellBold}>{row.section}</Text>
                             </View>
                             <View style={styles.colISO}>
-                                <Text style={styles.tableCell}>{row.iso}</Text>
+                                <Text style={styles.cell}>{row.iso}</Text>
                             </View>
                             <View style={styles.colDRI}>
-                                <Text style={styles.tableCell}>{row.dri}</Text>
+                                <Text style={styles.cell}>{row.dri}</Text>
                             </View>
                             <View style={styles.colWhy}>
-                                <Text style={styles.tableCell}>{row.why}</Text>
+                                <Text style={styles.cell}>{row.why}</Text>
                             </View>
                         </View>
                     ))}
@@ -1023,7 +1022,7 @@ export default function BusinessContinuityPlan({
                     <Text style={styles.versionTitle}>Version Control</Text>
                     <Text style={styles.placeholder}>[ENTER SIMILAR VERSION CONTROL LOG THAT APPEARS IN OTHER AREAS OF THE SOFTWARE]</Text>
                 </View>
-            </Page>
-        </BaseDocument>
+            </PageWrapper>
+        </Document>
     );
 }

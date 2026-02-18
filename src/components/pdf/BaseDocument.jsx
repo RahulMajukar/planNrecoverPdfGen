@@ -10,13 +10,13 @@ import {
 
 const styles = StyleSheet.create({
   page: {
-    backgroundColor: "#2b2b2b",
+    backgroundColor: "#ffffff",
     paddingTop: 80,
     paddingBottom: 70,
     paddingHorizontal: 50,
     fontSize: 11,
-    color: "#ffffff",
-    fontFamily: "Helvetica" // Ensure a standard font is used
+    color: "#111111",
+    fontFamily: "Helvetica"
   },
   header: {
     position: "absolute",
@@ -31,9 +31,9 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 18,
-    color: "#60a5fa",
+    color: "#111111",
     fontWeight: "bold",
-    textAlign: "left" // Explicitly left align header title
+    textAlign: "left"
   },
   logo: {
     width: 90,
@@ -43,7 +43,7 @@ const styles = StyleSheet.create({
   divider: {
     marginTop: 10,
     borderBottomWidth: 1,
-    borderBottomColor: "#e5e7eb"
+    borderBottomColor: "#cccccc"
   },
   footer: {
     position: "absolute",
@@ -54,14 +54,14 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "flex-end",
     fontSize: 9,
-    color: "#9ca3af"
+    color: "#555555"
   },
   footerLeft: {
     flexDirection: "column",
-    alignItems: "flex-start" // Align footer text to left
+    alignItems: "flex-start"
   },
   footerPage: {
-    textAlign: "right" // Align page number to right
+    textAlign: "right"
   },
   footerUrl: {
     marginTop: 2,
@@ -69,9 +69,60 @@ const styles = StyleSheet.create({
   }
 });
 
-export default function BaseDocument({ 
-  title, 
-  children, 
+/**
+ * PageWrapper — use this in multi-page documents (like BusinessContinuityPlan)
+ * where each section manages its own <Page>. Wrap your content with this
+ * instead of a bare <Page> to get the standard header and footer.
+ */
+export function PageWrapper({
+  children,
+  title = "Business Continuity Plan",
+  logoUrl = "https://dummyimage.com/200x60/000/ffffff&text=plan+%26+recover",
+  footerText = "© Plan & Recover. All rights reserved.",
+  footerUrl = "www.planandrecover.com",
+  style = {}
+}) {
+  return (
+    <Page size="A4" style={[styles.page, style]} wrap>
+      {/* HEADER */}
+      <View style={styles.header} fixed>
+        <View style={styles.headerRow}>
+          <Text style={styles.title}>{title}</Text>
+          <Image style={styles.logo} src={logoUrl} />
+        </View>
+        <View style={styles.divider} />
+      </View>
+
+      {/* CONTENT */}
+      <View style={{ marginTop: 20 }}>
+        {children}
+      </View>
+
+      {/* FOOTER */}
+      <View style={styles.footer} fixed>
+        <View style={styles.footerLeft}>
+          <Text>{footerText}</Text>
+          <Text style={styles.footerUrl}>{footerUrl}</Text>
+        </View>
+        <View style={styles.footerPage}>
+          <Text
+            render={({ pageNumber, totalPages }) =>
+              `Page ${pageNumber} / ${totalPages}`
+            }
+          />
+        </View>
+      </View>
+    </Page>
+  );
+}
+
+/**
+ * BaseDocument — default single-page document wrapper.
+ * Used by simpler documents that don't manage their own pages.
+ */
+export default function BaseDocument({
+  title,
+  children,
   companyName = "Plan & Recover",
   logoUrl = "https://dummyimage.com/200x60/000/ffffff&text=plan+%26+recover",
   footerText = "© Plan & Recover. All rights reserved.",
@@ -79,36 +130,14 @@ export default function BaseDocument({
 }) {
   return (
     <Document>
-      <Page size="A4" style={styles.page} wrap>
-        {/* HEADER */}
-        <View style={styles.header} fixed>
-          <View style={styles.headerRow}>
-            <Text style={styles.title}>{title}</Text>
-            <Image style={styles.logo} src={logoUrl} />
-          </View>
-          <View style={styles.divider} />
-        </View>
-
-        {/* CONTENT */}
-        <View style={{ marginTop: 20 }}>
-          {children}
-        </View>
-
-        {/* FOOTER */}
-        <View style={styles.footer} fixed>
-          <View style={styles.footerLeft}>
-            <Text>{footerText}</Text>
-            <Text style={styles.footerUrl}>{footerUrl}</Text>
-          </View>
-          <View style={styles.footerPage}>
-            <Text
-              render={({ pageNumber, totalPages }) =>
-                `Page ${pageNumber} / ${totalPages}`
-              }
-            />
-          </View>
-        </View>
-      </Page>
+      <PageWrapper
+        title={title}
+        logoUrl={logoUrl}
+        footerText={footerText}
+        footerUrl={footerUrl}
+      >
+        {children}
+      </PageWrapper>
     </Document>
   );
 }

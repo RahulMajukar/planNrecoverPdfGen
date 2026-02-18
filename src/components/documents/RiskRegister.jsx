@@ -1,90 +1,31 @@
 import React from "react";
 import { Text, View, StyleSheet } from "@react-pdf/renderer";
 import BaseDocument from "../pdf/BaseDocument";
+import { sharedStyles as styles } from "../pdf/pdfTheme";
 
-const styles = StyleSheet.create({
-    infoBlock: {
-        marginTop: 10,
-        marginBottom: 20
-    },
-    infoRow: {
-        flexDirection: "row",
-        marginBottom: 6,
-        alignItems: "center"
-    },
-    infoLabel: {
-        width: 80,
-        fontWeight: "bold",
-        color: "#ffffff",
-        fontSize: 11
-    },
-    infoValue: {
-        color: "#e5e7eb",
-        fontSize: 11
-    },
-    paragraph: {
-        lineHeight: 1.6,
-        color: "#e5e7eb",
-        marginBottom: 10,
-        fontSize: 11,
-        textAlign: "justify",
-        textIndent: 0
-    },
-    italicText: {
-        fontStyle: "italic",
-        color: "#9ca3af"
-    },
-    
-    // Highlight box
-    highlightBox: {
-        backgroundColor: "#374151",
-        borderLeftWidth: 3,
-        borderLeftColor: "#f59e0b",
-        padding: 10,
-        marginVertical: 12,
-        fontSize: 10,
-        color: "#e5e7eb"
-    },
-    
-    // Table Styles
-    table: {
-        marginTop: 20,
-        borderWidth: 1,
-        borderColor: "#374151",
-        borderStyle: "solid"
-    },
-    tableRow: {
-        flexDirection: "row",
-        borderBottomWidth: 1,
-        borderBottomColor: "#374151"
-    },
-    tableHeader: {
-        backgroundColor: "#1f2937",
-        padding: 8
-    },
-    tableCell: {
-        padding: 8,
-        fontSize: 9,
-        color: "#e5e7eb"
-    },
-    tableCellBold: {
-        padding: 8,
-        fontSize: 9,
-        color: "#ffffff",
-        fontWeight: "bold"
-    },
-    
-    // Column widths
+// Column widths specific to this document
+const col = StyleSheet.create({
     colThreat: { width: "30%" },
     colLikelihood: { width: "10%" },
     colImpact: { width: "10%" },
     colControl: { width: "10%" },
     colRiskScore: { width: "12%" },
     colDrivers: { width: "28%" },
-    
-    // Risk score colors
+});
+
+// Document-specific style overrides (grayscale)
+const local = StyleSheet.create({
+    highlightBox: {
+        backgroundColor: "#f3f4f6",
+        borderLeftWidth: 3,
+        borderLeftColor: "#555555",
+        padding: 10,
+        marginVertical: 12,
+        fontSize: 10,
+        color: "#333333"
+    },
     riskHigh: {
-        backgroundColor: "#ef4444",
+        backgroundColor: "#333333",
         color: "#ffffff",
         paddingHorizontal: 6,
         paddingVertical: 3,
@@ -94,17 +35,7 @@ const styles = StyleSheet.create({
         textAlign: "center"
     },
     riskMedium: {
-        backgroundColor: "#f59e0b",
-        color: "#000000",
-        paddingHorizontal: 6,
-        paddingVertical: 3,
-        borderRadius: 3,
-        fontSize: 9,
-        fontWeight: "bold",
-        textAlign: "center"
-    },
-    riskLow: {
-        backgroundColor: "#22c55e",
+        backgroundColor: "#777777",
         color: "#ffffff",
         paddingHorizontal: 6,
         paddingVertical: 3,
@@ -113,10 +44,18 @@ const styles = StyleSheet.create({
         fontWeight: "bold",
         textAlign: "center"
     },
-    
-    // Control badges
+    riskLow: {
+        backgroundColor: "#cccccc",
+        color: "#111111",
+        paddingHorizontal: 6,
+        paddingVertical: 3,
+        borderRadius: 3,
+        fontSize: 9,
+        fontWeight: "bold",
+        textAlign: "center"
+    },
     controlYes: {
-        backgroundColor: "#22c55e",
+        backgroundColor: "#333333",
         color: "#ffffff",
         paddingHorizontal: 6,
         paddingVertical: 2,
@@ -126,8 +65,8 @@ const styles = StyleSheet.create({
         textAlign: "center"
     },
     controlNo: {
-        backgroundColor: "#ef4444",
-        color: "#ffffff",
+        backgroundColor: "#aaaaaa",
+        color: "#111111",
         paddingHorizontal: 6,
         paddingVertical: 2,
         borderRadius: 3,
@@ -135,14 +74,9 @@ const styles = StyleSheet.create({
         fontWeight: "bold",
         textAlign: "center"
     },
-    
-    bold: {
-        fontWeight: "bold",
-        color: "#ffffff"
-    }
 });
 
-export default function RiskRegister({ 
+export default function RiskRegister({
     companyName = "Display name of company",
     generatedDate = new Date().toLocaleDateString()
 }) {
@@ -192,9 +126,9 @@ export default function RiskRegister({
 
     // Helper to get risk level style
     const getRiskStyle = (score) => {
-        if (score >= 50) return styles.riskHigh;
-        if (score >= 30) return styles.riskMedium;
-        return styles.riskLow;
+        if (score >= 50) return local.riskHigh;
+        if (score >= 30) return local.riskMedium;
+        return local.riskLow;
     };
 
     return (
@@ -222,7 +156,7 @@ export default function RiskRegister({
                 Scales (illustrative): Likelihood 1–5, Exposure Intensity 1–5, and Control Yes & No.
             </Text>
 
-            <View style={styles.highlightBox}>
+            <View style={local.highlightBox}>
                 <Text>
                     [Enumerations are as follows: Very High, High, Medium, Low, Very Low align to 5 to 1 – the following example is the same example taken from the InsuraCast report. Unlike the InsuraCast Report which only highlights the top risks, this report should include a list of all risks listed in descending order of Risk Score]
                 </Text>
@@ -235,48 +169,48 @@ export default function RiskRegister({
             {/* Risk Table */}
             <View style={styles.table}>
                 <View style={[styles.tableRow, styles.tableHeader]}>
-                    <View style={styles.colThreat}>
+                    <View style={col.colThreat}>
                         <Text style={styles.tableCellBold}>Threat</Text>
                     </View>
-                    <View style={styles.colLikelihood}>
+                    <View style={col.colLikelihood}>
                         <Text style={styles.tableCellBold}>Likelihood</Text>
                     </View>
-                    <View style={styles.colImpact}>
+                    <View style={col.colImpact}>
                         <Text style={styles.tableCellBold}>Impact</Text>
                     </View>
-                    <View style={styles.colControl}>
+                    <View style={col.colControl}>
                         <Text style={styles.tableCellBold}>Control</Text>
                     </View>
-                    <View style={styles.colRiskScore}>
+                    <View style={col.colRiskScore}>
                         <Text style={styles.tableCellBold}>Risk score</Text>
                     </View>
-                    <View style={styles.colDrivers}>
+                    <View style={col.colDrivers}>
                         <Text style={styles.tableCellBold}>Potential loss drivers [AI driven results]</Text>
                     </View>
                 </View>
 
                 {risks.map((risk, idx) => (
                     <View key={idx} style={styles.tableRow}>
-                        <View style={styles.colThreat}>
+                        <View style={col.colThreat}>
                             <Text style={styles.tableCellBold}>{risk.threat}</Text>
                         </View>
-                        <View style={styles.colLikelihood}>
+                        <View style={col.colLikelihood}>
                             <Text style={styles.tableCellBold}>{risk.likelihood}</Text>
                         </View>
-                        <View style={styles.colImpact}>
+                        <View style={col.colImpact}>
                             <Text style={styles.tableCellBold}>{risk.impact}</Text>
                         </View>
-                        <View style={styles.colControl}>
-                            <View style={risk.control === "Yes" ? styles.controlYes : styles.controlNo}>
+                        <View style={col.colControl}>
+                            <View style={risk.control === "Yes" ? local.controlYes : local.controlNo}>
                                 <Text>{risk.control}</Text>
                             </View>
                         </View>
-                        <View style={styles.colRiskScore}>
+                        <View style={col.colRiskScore}>
                             <View style={getRiskStyle(risk.riskScore)}>
                                 <Text>{risk.riskScore}</Text>
                             </View>
                         </View>
-                        <View style={styles.colDrivers}>
+                        <View style={col.colDrivers}>
                             <Text style={styles.tableCell}>{risk.drivers}</Text>
                         </View>
                     </View>

@@ -1,5 +1,6 @@
-import React from "react";
-import { PDFViewer, PDFDownloadLink } from "@react-pdf/renderer";
+// PdfPreviewModal.jsx
+import React, { useState, useEffect } from "react";
+import { PDFViewer, PDFDownloadLink, BlobProvider } from "@react-pdf/renderer";
 
 export default function PdfPreviewModal({ 
   open, 
@@ -9,6 +10,18 @@ export default function PdfPreviewModal({
   fileName = "document.pdf",
   title = "PDF Preview"
 }) {
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    if (open) {
+      setIsLoading(true);
+      // Simulate loading completion
+      const timer = setTimeout(() => setIsLoading(false), 1000);
+      return () => clearTimeout(timer);
+    }
+  }, [open]);
+
   if (!open) return null;
 
   return (
@@ -20,6 +33,7 @@ export default function PdfPreviewModal({
           <h2 className="text-white font-semibold text-lg">{title}</h2>
           
           <div className="flex gap-3">
+            {/* Download button - this doesn't cause rendering issues */}
             <PDFDownloadLink
               document={<PdfDocument {...documentProps} />}
               fileName={fileName}
@@ -49,11 +63,40 @@ export default function PdfPreviewModal({
           </div>
         </div>
 
-        {/* PDF Viewer */}
-        <div className="flex-1 bg-neutral-800 rounded-b-xl overflow-hidden">
-          <PDFViewer width="100%" height="100%" className="w-full h-full">
-            <PdfDocument {...documentProps} />
-          </PDFViewer>
+        {/* PDF Viewer with loading state */}
+        <div className="flex-1 bg-neutral-800 rounded-b-xl overflow-hidden relative">
+          {isLoading ? (
+            <div className="absolute inset-0 flex items-center justify-center">
+              <div className="text-center">
+                <svg className="animate-spin h-12 w-12 text-blue-500 mx-auto mb-4" viewBox="0 0 24 24">
+                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none"/>
+                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"/>
+                </svg>
+                <p className="text-white">Loading PDF preview...</p>
+              </div>
+            </div>
+          ) : error ? (
+            <div className="absolute inset-0 flex items-center justify-center">
+              <div className="text-center text-red-500">
+                <p>Error loading PDF preview</p>
+                <button 
+                  onClick={() => window.location.reload()} 
+                  className="mt-4 bg-blue-600 px-4 py-2 rounded text-white"
+                >
+                  Retry
+                </button>
+              </div>
+            </div>
+          ) : (
+            <PDFViewer 
+              width="100%" 
+              height="100%" 
+              className="w-full h-full"
+              showToolbar={false}
+            >
+              <PdfDocument {...documentProps} />
+            </PDFViewer>
+          )}
         </div>
       </div>
     </div>

@@ -1,57 +1,28 @@
 import React from "react";
 import { Text, View, StyleSheet } from "@react-pdf/renderer";
 import BaseDocument from "../pdf/BaseDocument";
+import { sharedStyles as styles } from "../pdf/pdfTheme";
 
-const styles = StyleSheet.create({
-    infoBlock: {
-        marginTop: 10,
-        marginBottom: 20
-    },
-    infoRow: {
-        flexDirection: "row",
-        marginBottom: 6,
-        alignItems: "center"
-    },
-    infoLabel: {
-        width: 80,
-        fontWeight: "bold",
-        color: "#ffffff",
-        fontSize: 11
-    },
-    infoValue: {
-        backgroundColor: "#facc15",
-        color: "#000000",
-        paddingHorizontal: 6,
-        paddingVertical: 2,
-        fontSize: 11,
-        fontWeight: "bold"
-    },
-    sectionTitle: {
-        color: "#22c55e",
-        fontSize: 16,
-        fontWeight: "bold",
-        marginTop: 24,
-        marginBottom: 12,
-        textAlign: "left"
-    },
-    paragraph: {
-        lineHeight: 1.6,
-        color: "#e5e7eb",
-        marginBottom: 10,
-        fontSize: 11,
-        textAlign: "justify"
-    },
-    italicText: {
-        fontStyle: "italic",
-        color: "#9ca3af"
-    },
+// Column widths and local overrides specific to this document
+const col = StyleSheet.create({
+    col1: { width: "25%" },
+    col2: { width: "18%" },
+    col3: { width: "15%" },
+    col4: { width: "15%" },
+    col5: { width: "17%" },
+    col6: { width: "10%" },
+});
+
+// Document-specific style overrides (grayscale)
+const local = StyleSheet.create({
     highlightBox: {
-        backgroundColor: "#facc15",
-        color: "#000000",
+        backgroundColor: "#f3f4f6",
+        borderLeftWidth: 3,
+        borderLeftColor: "#555555",
         padding: 10,
         marginVertical: 16,
         fontSize: 11,
-        fontWeight: "bold"
+        color: "#333333"
     },
     tableContainer: {
         marginTop: 20,
@@ -60,43 +31,12 @@ const styles = StyleSheet.create({
     tableTitle: {
         fontSize: 14,
         fontWeight: "bold",
-        color: "#ffffff",
+        color: "#111111",
         marginBottom: 12
     },
-    table: {
-        borderWidth: 1,
-        borderColor: "#374151",
-        borderStyle: "solid"
-    },
-    tableRow: {
-        flexDirection: "row",
-        borderBottomWidth: 1,
-        borderBottomColor: "#374151",
-        alignItems: "center"
-    },
-    tableHeader: {
-        backgroundColor: "#1f2937"
-    },
-    tableCell: {
-        padding: 10,
-        fontSize: 10,
-        color: "#e5e7eb"
-    },
-    tableHeaderCell: {
-        padding: 10,
-        fontSize: 10,
-        color: "#ffffff",
-        fontWeight: "bold"
-    },
-    col1: { width: "25%" },
-    col2: { width: "18%" },
-    col3: { width: "15%" },
-    col4: { width: "15%" },
-    col5: { width: "17%" },
-    col6: { width: "10%" },
     badgeYes: {
-        backgroundColor: "#fecaca",
-        color: "#dc2626",
+        backgroundColor: "#555555",
+        color: "#ffffff",
         paddingHorizontal: 8,
         paddingVertical: 3,
         borderRadius: 4,
@@ -105,8 +45,8 @@ const styles = StyleSheet.create({
         textAlign: "center"
     },
     badgeNo: {
-        backgroundColor: "#bbf7d0",
-        color: "#16a34a",
+        backgroundColor: "#dddddd",
+        color: "#111111",
         paddingHorizontal: 8,
         paddingVertical: 3,
         borderRadius: 4,
@@ -119,9 +59,9 @@ const styles = StyleSheet.create({
         marginRight: 6
     },
     actionIcon: {
-        color: "#60a5fa",
+        color: "#333333",
         fontSize: 12
-    }
+    },
 });
 
 export default function ExerciseAfterActionReport({
@@ -172,64 +112,64 @@ export default function ExerciseAfterActionReport({
                 (Aligned to ISO 22301 clauses 9.1, 9.2, 9.3, and 10.1; and DRI International 10 Professional Practices 8, 9, and 10)
             </Text>
 
-            <View style={styles.highlightBox}>
+            <View style={local.highlightBox}>
                 <Text>{exerciseSummary}</Text>
             </View>
 
-            <View style={styles.tableContainer}>
-                <Text style={styles.tableTitle}>After-Action Reports</Text>
-                
+            <View style={local.tableContainer}>
+                <Text style={local.tableTitle}>After-Action Reports</Text>
+
                 <View style={styles.table}>
                     {/* Table Header */}
                     <View style={[styles.tableRow, styles.tableHeader]}>
-                        <View style={styles.col1}>
-                            <Text style={styles.tableHeaderCell}>Exercise Name</Text>
+                        <View style={col.col1}>
+                            <Text style={styles.tableCellBold}>Exercise Name</Text>
                         </View>
-                        <View style={styles.col2}>
-                            <Text style={styles.tableHeaderCell}>Exercise Date</Text>
+                        <View style={col.col2}>
+                            <Text style={styles.tableCellBold}>Exercise Date</Text>
                         </View>
-                        <View style={styles.col3}>
-                            <Text style={styles.tableHeaderCell}>Exercise Type</Text>
+                        <View style={col.col3}>
+                            <Text style={styles.tableCellBold}>Exercise Type</Text>
                         </View>
-                        <View style={styles.col4}>
-                            <Text style={styles.tableHeaderCell}>Gaps Identified</Text>
+                        <View style={col.col4}>
+                            <Text style={styles.tableCellBold}>Gaps Identified</Text>
                         </View>
-                        <View style={styles.col5}>
-                            <Text style={styles.tableHeaderCell}>Remediation Date</Text>
+                        <View style={col.col5}>
+                            <Text style={styles.tableCellBold}>Remediation Date</Text>
                         </View>
-                        <View style={styles.col6}>
-                            <Text style={styles.tableHeaderCell}>Action</Text>
+                        <View style={col.col6}>
+                            <Text style={styles.tableCellBold}>Action</Text>
                         </View>
                     </View>
 
                     {/* Table Rows */}
                     {exercises.map((exercise, index) => (
                         <View key={index} style={styles.tableRow}>
-                            <View style={styles.col1}>
+                            <View style={col.col1}>
                                 <Text style={styles.tableCell}>
-                                    <Text style={styles.iconText}>{exercise.icon}</Text>
+                                    <Text style={local.iconText}>{exercise.icon}</Text>
                                     {exercise.name}
                                 </Text>
                             </View>
-                            <View style={styles.col2}>
+                            <View style={col.col2}>
                                 <Text style={styles.tableCell}>{exercise.date}</Text>
                             </View>
-                            <View style={styles.col3}>
+                            <View style={col.col3}>
                                 <Text style={styles.tableCell}>
-                                    <Text style={styles.iconText}>📋</Text>
+                                    <Text style={local.iconText}>📋</Text>
                                     {exercise.type}
                                 </Text>
                             </View>
-                            <View style={styles.col4}>
-                                <View style={exercise.gapsIdentified === "Yes" ? styles.badgeYes : styles.badgeNo}>
+                            <View style={col.col4}>
+                                <View style={exercise.gapsIdentified === "Yes" ? local.badgeYes : local.badgeNo}>
                                     <Text>{exercise.gapsIdentified}</Text>
                                 </View>
                             </View>
-                            <View style={styles.col5}>
+                            <View style={col.col5}>
                                 <Text style={styles.tableCell}>{exercise.remediationDate}</Text>
                             </View>
-                            <View style={styles.col6}>
-                                <Text style={[styles.tableCell, styles.actionIcon]}>
+                            <View style={col.col6}>
+                                <Text style={[styles.tableCell, local.actionIcon]}>
                                     {exercise.action}
                                 </Text>
                             </View>

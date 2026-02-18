@@ -1,111 +1,14 @@
 import React from "react";
 import { Text, View, StyleSheet } from "@react-pdf/renderer";
 import BaseDocument from "../pdf/BaseDocument";
+import { sharedStyles as styles } from "../pdf/pdfTheme";
 
-const styles = StyleSheet.create({
-    infoBlock: {
-        marginTop: 10,
-        marginBottom: 20
-    },
-    infoRow: {
-        flexDirection: "row",
-        marginBottom: 6,
-        alignItems: "center"
-    },
-    infoLabel: {
-        width: 80,
-        fontWeight: "bold",
-        color: "#ffffff",
-        fontSize: 11
-    },
-    sectionTitle: {
-        color: "#22c55e",
-        fontSize: 16,
-        fontWeight: "bold",
-        marginTop: 24,
-        marginBottom: 12,
-        textAlign: "left"
-    },
-    subsectionTitle: {
-        color: "#ffffff",
-        fontSize: 13,
-        fontWeight: "bold",
-        marginTop: 18,
-        marginBottom: 8,
-        textAlign: "left"
-    },
-    subsubsectionTitle: {
-        color: "#9ca3af",
-        fontSize: 11,
-        fontWeight: "bold",
-        marginTop: 12,
-        marginBottom: 6,
-        textAlign: "left",
-        fontStyle: "italic"
-    },
-    paragraph: {
-        lineHeight: 1.6,
-        color: "#e5e7eb",
-        marginBottom: 10,
-        fontSize: 11,
-        textAlign: "justify",
-        textIndent: 0
-    },
-    bulletList: {
-        marginLeft: 15,
-        marginBottom: 10
-    },
-    bulletItem: {
-        lineHeight: 1.5,
-        color: "#e5e7eb",
-        fontSize: 10,
-        marginBottom: 4,
-        textAlign: "justify"
-    },
-    link: {
-        color: "#93c5fd",
-        textDecoration: "underline"
-    },
-    divider: {
-        borderBottomWidth: 1,
-        borderBottomColor: "#374151",
-        marginVertical: 16
-    },
-    table: {
-        marginTop: 20,
-        borderWidth: 1,
-        borderColor: "#374151",
-        borderStyle: "solid"
-    },
-    tableRow: {
-        flexDirection: "row",
-        borderBottomWidth: 1,
-        borderBottomColor: "#374151"
-    },
-    tableHeader: {
-        backgroundColor: "#1f2937",
-        padding: 8
-    },
-    tableCell: {
-        padding: 8,
-        fontSize: 9,
-        color: "#e5e7eb"
-    },
-    tableCellBold: {
-        padding: 8,
-        fontSize: 9,
-        color: "#ffffff",
-        fontWeight: "bold"
-    },
+// Column widths specific to this document
+const col = StyleSheet.create({
     col1: { width: "25%" },
     col2: { width: "18%" },
     col3: { width: "18%" },
     col4: { width: "39%" },
-    smallBullet: {
-        fontSize: 8,
-        marginLeft: 10,
-        marginBottom: 2
-    }
 });
 
 const bulletPoint = "• ";
@@ -155,13 +58,13 @@ export default function ClientProgramStatement({
             <View style={styles.divider} />
 
             <Text style={styles.sectionTitle}>Program Overview</Text>
-            
+
             <Text style={styles.subsectionTitle}>Governance and accountability</Text>
             <Text style={styles.subsubsectionTitle}>General description</Text>
             <Text style={styles.paragraph}>
                 Governance establishes the authority, ownership, and operating rhythm required to keep continuity and crisis capabilities current, usable, and enforceable. A mature governance structure reduces plan drift, ensures that decision rights and escalation pathways are clear under stress, and supports consistent execution across incidents. Document control, approvals, and management review routines preserve the integrity of program artifacts and provide traceable accountability.
             </Text>
-            
+
             <Text style={styles.subsubsectionTitle}>How Plan & Recover supports this section</Text>
             <View style={styles.bulletList}>
                 <Text style={styles.bulletItem}>{bulletPoint}Centralized governance framework for continuity, crisis management, and emergency response program structure.</Text>
@@ -176,7 +79,7 @@ export default function ClientProgramStatement({
             <Text style={styles.paragraph}>
                 Business Impact Analysis (BIA) establishes the operational priorities that drive recovery decisions, resource allocation, and recovery sequencing. A complete critical process inventory, paired with documented impacts, and time-based tolerance thresholds, reduces the probability of mis prioritization during disruption. Documented RTOs support disciplined triage and provide a measurable target for recovery strategy design. For loss reduction, high-quality BIA outputs directly support faster stabilization, reduced downtime, and reduced secondary impacts by clarifying which services must be restored first and what consequences escalate over time.
             </Text>
-            
+
             <Text style={styles.subsubsectionTitle}>How Plan & Recover supports this section</Text>
             <View style={styles.bulletList}>
                 <Text style={styles.bulletItem}>{bulletPoint}Structured capture of critical process inventories with consistent fields to support completeness and comparability.</Text>
@@ -190,7 +93,7 @@ export default function ClientProgramStatement({
             <Text style={styles.paragraph}>
                 Risk assessment identifies credible disruption scenarios and enables targeted control selection to reduce event frequency and severity. Risk treatment planning converts identified risks into owned mitigation actions with defined timelines and measurable closure. A disciplined methodology improves consistency of risk evaluation across business units and over time, supporting defensible prioritization.
             </Text>
-            
+
             <Text style={styles.subsubsectionTitle}>How Plan & Recover supports this section</Text>
             <View style={styles.bulletList}>
                 <Text style={styles.bulletItem}>{bulletPoint}Configurable risk methodology structures supporting consistent likelihood and impact criteria across the organization.</Text>
@@ -205,7 +108,7 @@ export default function ClientProgramStatement({
             <Text style={styles.paragraph}>
                 Continuity strategies convert recovery objectives into practical methods for restoring operations within required timeframes. Strategy maturity is demonstrated by coverage across critical processes, feasibility against known constraints, and documented workarounds where automation or facilities may be unavailable. Dependencies, including people, facilities, technology, and third parties, must be explicitly addressed to reduce strategy failure risk. Validated recovery strategies shorten outage duration and reduce revenue loss by ensuring that recovery resources and procedures are preplanned, accessible, and executable.
             </Text>
-            
+
             <Text style={styles.subsubsectionTitle}>How Plan & Recover supports this section</Text>
             <View style={styles.bulletList}>
                 <Text style={styles.bulletItem}>{bulletPoint}Strategy libraries and recovery playbooks aligned to critical processes and required recovery timelines.</Text>
@@ -220,7 +123,7 @@ export default function ClientProgramStatement({
             <Text style={styles.paragraph}>
                 Crisis management capabilities govern coordinated decision-making during high-impact events where operational disruption intersects with safety, reputational exposure, and stakeholder scrutiny. Defined incident classification levels, escalation thresholds, and a documented command structure reduce delays and prevent fragmented response. Tactical actions for life safety events and operational response improve early-stage performance, when outcomes are most sensitive to speed and coordination. Effective crisis execution reduces escalation likelihood, contains loss severity, and supports faster transition from response to stabilized recovery.
             </Text>
-            
+
             <Text style={styles.subsubsectionTitle}>How Plan & Recover supports this section</Text>
             <View style={styles.bulletList}>
                 <Text style={styles.bulletItem}>{bulletPoint}Crisis management and emergency management plan structures supporting defined command roles, alternates, and decision authorities.</Text>
@@ -234,7 +137,7 @@ export default function ClientProgramStatement({
             <Text style={styles.paragraph}>
                 Stakeholder communications is a core driver of operational stability and reputational protection during disruption. Defined ownership, preapproved templates, and clear approval workflows reduce message delays and prevent inconsistent or inaccurate communications. Internal notification structures support employee safety, workforce coordination, and operational continuity. Customer and vendor communications reduce churn risk and contractual friction by setting expectations, prioritizing critical services, and improving recovery coordination. Strong communications capabilities reduce secondary losses and support faster normalization of operations.
             </Text>
-            
+
             <Text style={styles.subsubsectionTitle}>How Plan & Recover supports this section</Text>
             <View style={styles.bulletList}>
                 <Text style={styles.bulletItem}>{bulletPoint}Crisis communications plan (included within the Crisis management plan) structures with role ownership and defined approval pathways.</Text>
@@ -249,7 +152,7 @@ export default function ClientProgramStatement({
             <Text style={styles.paragraph}>
                 Exercises validate that documented plans are executable and that teams can perform critical actions under time pressure. Scenario-based testing identifies gaps in procedures, role clarity, communications pathways, and recovery feasibility before real incidents occur. After-action reporting and corrective action closure convert exercise findings into measurable improvements, reducing the probability of execution failure during an actual loss event. A consistent exercise and remediation cycle demonstrates continuous improvement and sustained readiness, both of which support reduced interruption duration and reduced loss severity.
             </Text>
-            
+
             <Text style={styles.subsubsectionTitle}>How Plan & Recover supports this section</Text>
             <View style={styles.bulletList}>
                 <Text style={styles.bulletItem}>{bulletPoint}Exercise planning workflows supporting scenario selection and coverage across major disruption risks.</Text>
@@ -264,7 +167,7 @@ export default function ClientProgramStatement({
             <Text style={styles.paragraph}>
                 Maintenance ensures that continuity, crisis, and emergency response capabilities remain current and usable as operations, staffing, vendors, and threats evolve. A disciplined review cadence prevents outdated contacts, obsolete procedures, and untested assumptions from undermining recovery. Auditability, including version history and traceable updates, supports assurance that controls operate over time, not only at the point of creation. Continual improvement uses performance evaluation, reviews, and corrective actions to strengthen resilience, reduce interruption duration, and demonstrate program integrity for underwriting review.
             </Text>
-            
+
             <Text style={styles.subsubsectionTitle}>How Plan & Recover supports this section</Text>
             <View style={styles.bulletList}>
                 <Text style={styles.bulletItem}>{bulletPoint}Recurring review workflows supporting scheduled updates for plans, contacts, dependencies, and vendors.</Text>
@@ -277,7 +180,7 @@ export default function ClientProgramStatement({
             <View style={styles.divider} />
 
             <Text style={styles.sectionTitle}>Program Alignment to Standards</Text>
-            
+
             {/* Table Header */}
             <View style={styles.table}>
                 <View style={[styles.tableRow, styles.tableHeader]}>
@@ -297,16 +200,16 @@ export default function ClientProgramStatement({
 
                 {/* Row 1 */}
                 <View style={styles.tableRow}>
-                    <View style={styles.col1}>
+                    <View style={col.col1}>
                         <Text style={styles.tableCellBold}>Program initiation and governance</Text>
                     </View>
-                    <View style={styles.col2}>
+                    <View style={col.col2}>
                         <Text style={styles.tableCell}>Clauses 4–6</Text>
                     </View>
-                    <View style={styles.col3}>
+                    <View style={col.col3}>
                         <Text style={styles.tableCell}>PP1</Text>
                     </View>
-                    <View style={styles.col4}>
+                    <View style={col.col4}>
                         <Text style={styles.smallBullet}>{bulletPoint}Policy</Text>
                         <Text style={styles.smallBullet}>{bulletPoint}Procedure</Text>
                         <Text style={styles.smallBullet}>{bulletPoint}Methodology</Text>
@@ -316,16 +219,16 @@ export default function ClientProgramStatement({
 
                 {/* Row 2 */}
                 <View style={styles.tableRow}>
-                    <View style={styles.col1}>
+                    <View style={col.col1}>
                         <Text style={styles.tableCellBold}>Risk assessment</Text>
                     </View>
-                    <View style={styles.col2}>
+                    <View style={col.col2}>
                         <Text style={styles.tableCell}>Clause 8.2.3</Text>
                     </View>
-                    <View style={styles.col3}>
+                    <View style={col.col3}>
                         <Text style={styles.tableCell}>PP2</Text>
                     </View>
-                    <View style={styles.col4}>
+                    <View style={col.col4}>
                         <Text style={styles.smallBullet}>{bulletPoint}Threat and Vulnerability Assessment</Text>
                         <Text style={styles.smallBullet}>{bulletPoint}Inherent and Residual Controls</Text>
                         <Text style={styles.smallBullet}>{bulletPoint}Risk Mitigation Plans</Text>
@@ -334,16 +237,16 @@ export default function ClientProgramStatement({
 
                 {/* Row 3 */}
                 <View style={styles.tableRow}>
-                    <View style={styles.col1}>
+                    <View style={col.col1}>
                         <Text style={styles.tableCellBold}>Business impact analysis</Text>
                     </View>
-                    <View style={styles.col2}>
+                    <View style={col.col2}>
                         <Text style={styles.tableCell}>Clause 8.2.2</Text>
                     </View>
-                    <View style={styles.col3}>
+                    <View style={col.col3}>
                         <Text style={styles.tableCell}>PP3</Text>
                     </View>
-                    <View style={styles.col4}>
+                    <View style={col.col4}>
                         <Text style={styles.smallBullet}>{bulletPoint}Business Impact Analysis</Text>
                         <Text style={styles.smallBullet}>{bulletPoint}Recovery Time Objectives</Text>
                         <Text style={styles.smallBullet}>{bulletPoint}Recovery point Objectives</Text>
@@ -355,16 +258,16 @@ export default function ClientProgramStatement({
 
                 {/* Row 4 */}
                 <View style={styles.tableRow}>
-                    <View style={styles.col1}>
+                    <View style={col.col1}>
                         <Text style={styles.tableCellBold}>Strategies</Text>
                     </View>
-                    <View style={styles.col2}>
+                    <View style={col.col2}>
                         <Text style={styles.tableCell}>Clause 8.3</Text>
                     </View>
-                    <View style={styles.col3}>
+                    <View style={col.col3}>
                         <Text style={styles.tableCell}>PP4</Text>
                     </View>
-                    <View style={styles.col4}>
+                    <View style={col.col4}>
                         <Text style={styles.smallBullet}>{bulletPoint}Recovery Strategies for Outage Types: Facility, Technology, People, Third-party</Text>
                         <Text style={styles.smallBullet}>{bulletPoint}Manual Workaround Procedures</Text>
                     </View>
@@ -372,16 +275,16 @@ export default function ClientProgramStatement({
 
                 {/* Row 5 */}
                 <View style={styles.tableRow}>
-                    <View style={styles.col1}>
+                    <View style={col.col1}>
                         <Text style={styles.tableCellBold}>Incident response</Text>
                     </View>
-                    <View style={styles.col2}>
+                    <View style={col.col2}>
                         <Text style={styles.tableCell}>Clause 8.4.2</Text>
                     </View>
-                    <View style={styles.col3}>
+                    <View style={col.col3}>
                         <Text style={styles.tableCell}>PP5</Text>
                     </View>
-                    <View style={styles.col4}>
+                    <View style={col.col4}>
                         <Text style={styles.smallBullet}>{bulletPoint}Crisis Management Plan</Text>
                         <Text style={styles.smallBullet}>{bulletPoint}Roles & Responsibilities</Text>
                     </View>
@@ -389,48 +292,48 @@ export default function ClientProgramStatement({
 
                 {/* Row 6 */}
                 <View style={styles.tableRow}>
-                    <View style={styles.col1}>
+                    <View style={col.col1}>
                         <Text style={styles.tableCellBold}>Plan development</Text>
                     </View>
-                    <View style={styles.col2}>
+                    <View style={col.col2}>
                         <Text style={styles.tableCell}>Clause 8.4</Text>
                     </View>
-                    <View style={styles.col3}>
+                    <View style={col.col3}>
                         <Text style={styles.tableCell}>PP6</Text>
                     </View>
-                    <View style={styles.col4}>
+                    <View style={col.col4}>
                         <Text style={styles.smallBullet}>{bulletPoint}Business Continuity Plan</Text>
                     </View>
                 </View>
 
                 {/* Row 7 */}
                 <View style={styles.tableRow}>
-                    <View style={styles.col1}>
+                    <View style={col.col1}>
                         <Text style={styles.tableCellBold}>Awareness and training</Text>
                     </View>
-                    <View style={styles.col2}>
+                    <View style={col.col2}>
                         <Text style={styles.tableCell}>Clauses 7.2–7.3</Text>
                     </View>
-                    <View style={styles.col3}>
+                    <View style={col.col3}>
                         <Text style={styles.tableCell}>PP7</Text>
                     </View>
-                    <View style={styles.col4}>
+                    <View style={col.col4}>
                         <Text style={styles.smallBullet}>{bulletPoint}Awareness & Training Materials</Text>
                     </View>
                 </View>
 
                 {/* Row 8 */}
                 <View style={styles.tableRow}>
-                    <View style={styles.col1}>
+                    <View style={col.col1}>
                         <Text style={styles.tableCellBold}>Exercising and maintenance</Text>
                     </View>
-                    <View style={styles.col2}>
+                    <View style={col.col2}>
                         <Text style={styles.tableCell}>Clauses 8.5–8.6, 10</Text>
                     </View>
-                    <View style={styles.col3}>
+                    <View style={col.col3}>
                         <Text style={styles.tableCell}>PP8</Text>
                     </View>
-                    <View style={styles.col4}>
+                    <View style={col.col4}>
                         <Text style={styles.smallBullet}>{bulletPoint}Tabletop Scenario Creation Tool</Text>
                         <Text style={styles.smallBullet}>{bulletPoint}After-action Report</Text>
                     </View>
@@ -438,32 +341,32 @@ export default function ClientProgramStatement({
 
                 {/* Row 9 */}
                 <View style={styles.tableRow}>
-                    <View style={styles.col1}>
+                    <View style={col.col1}>
                         <Text style={styles.tableCellBold}>Crisis communications</Text>
                     </View>
-                    <View style={styles.col2}>
+                    <View style={col.col2}>
                         <Text style={styles.tableCell}>Clause 7.4 and 8.4.3</Text>
                     </View>
-                    <View style={styles.col3}>
+                    <View style={col.col3}>
                         <Text style={styles.tableCell}>PP9</Text>
                     </View>
-                    <View style={styles.col4}>
+                    <View style={col.col4}>
                         <Text style={styles.smallBullet}>{bulletPoint}Crisis Communications Plan (included within the Crisis Management Plan)</Text>
                     </View>
                 </View>
 
                 {/* Row 10 */}
                 <View style={styles.tableRow}>
-                    <View style={styles.col1}>
+                    <View style={col.col1}>
                         <Text style={styles.tableCellBold}>External coordination</Text>
                     </View>
-                    <View style={styles.col2}>
+                    <View style={col.col2}>
                         <Text style={styles.tableCell}>Clause 8</Text>
                     </View>
-                    <View style={styles.col3}>
+                    <View style={col.col3}>
                         <Text style={styles.tableCell}>PP10</Text>
                     </View>
-                    <View style={styles.col4}>
+                    <View style={col.col4}>
                         <Text style={styles.smallBullet}>{bulletPoint}Identification of Emergency Services</Text>
                         <Text style={styles.smallBullet}>{bulletPoint}External Coordination Plan (included within the Crisis Management Plan)</Text>
                     </View>
